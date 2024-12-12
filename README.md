@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![Thrive](public/favicon.ico)
 
-## Getting Started
+# Thrive - Web3 Personal Development Platform
 
-First, run the development server:
+Thrive is a revolutionary Web3 platform that gamifies self-improvement through AI-powered guidance and blockchain rewards. Built on Solana for lightning-fast, cost-effective transactions, Thrive creates a unique ecosystem where personal growth meets tangible value.
 
+## 🌟 Key Features
+
+- **AI-Powered Coaching**: Personalized guidance and recommendations for your development journey
+- **Goal Setting & Tracking**: Set, track, and achieve personal milestones
+- **Blockchain Rewards**: Earn THRIVE tokens for completing tasks and reaching goals
+- **Health Metrics Integration**: Connect with popular health tracking devices
+- **Community Engagement**: Join challenges and connect with like-minded individuals
+- **Achievement NFTs**: Own your progress through blockchain-verified achievements
+
+## 🚀 Getting Started
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/thrive.git
+cd thrive
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 💻 Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend**: Next.js 13+, TypeScript, TailwindCSS, Shadcn/ui
+- **Blockchain**: Solana, Web3.js, Wallet Adapters
+- **AI Integration**: OpenAI, LangChain
+- **State Management**: Redux Toolkit, React Query
+- **Smart Contracts**: Rust, Anchor Framework
 
-## Learn More
+## 🔧 Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js 16.8 or later
+- Phantom or Solflare wallet
+- Git
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📚 Documentation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+For detailed documentation about the platform's features and technical implementation, check out our docs folder:
 
-## Deploy on Vercel
+- [Application Flow](docs/app-flow.md)
+- [Technical Stack](docs/tech-stack.md)
+- [Project Requirements](docs/project-requirements.md)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🤝 Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+We welcome contributions! Please see our contributing guidelines for more details.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🔗 Links
+
+- [Website](https://thrive.example.com)
+- [Documentation](https://docs.thrive.example.com)
+- [Community](https://community.thrive.example.com)
