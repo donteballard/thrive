@@ -1,0 +1,16 @@
+{
+  "name": "Thrive",
+  "short_name": "Thrive",
+  "description": "Web3 personal development platform with AI-powered guidance and blockchain rewards",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    }
+  ]
+} 
