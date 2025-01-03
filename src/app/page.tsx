@@ -72,13 +72,6 @@ export default function Home() {
     localStorage.setItem('theme', newTheme ? 'dark' : 'light');
   };
 
-  // Handle wallet connection
-  useEffect(() => {
-    if (connected) {
-      router.push('/dashboard');
-    }
-  }, [connected, router]);
-
   const handleNavClick = (sectionId: string) => {
     scrollToSection(sectionId);
     setIsMenuOpen(false);
