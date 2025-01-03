@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   try {
     const walletAddress = await getWalletAddress(request);
     if (!walletAddress) {
-      return new NextResponse('Unauthorized', { status: 401 });
+      return new NextResponse('Unauthorized - Please connect your wallet', { status: 401 });
     }
 
     // Get or create user with wallet address
@@ -17,7 +17,10 @@ export async function GET(request: Request) {
 
     if (!user) {
       user = await db.user.create({
-        data: { walletAddress },
+        data: { 
+          walletAddress,
+          username: walletAddress, // Use full wallet address as username
+        },
       });
     }
 

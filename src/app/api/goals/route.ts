@@ -7,6 +7,9 @@ import { Prisma } from '@prisma/client';
 export async function GET(request: Request) {
   try {
     const walletAddress = await getWalletAddress(request);
+    if (!walletAddress) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
     
     let user = await db.user.findUnique({
       where: { walletAddress },
@@ -14,7 +17,10 @@ export async function GET(request: Request) {
 
     if (!user) {
       user = await db.user.create({
-        data: { walletAddress },
+        data: { 
+          walletAddress,
+          username: walletAddress, // Use full wallet address as username
+        },
       });
     }
 
@@ -52,15 +58,21 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const walletAddress = await getWalletAddress(request);
+    if (!walletAddress) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
     
     // Get or create user with mock wallet address
     let user = await db.user.findUnique({
-      where: { walletAddress },
+      where: { walletAddress: walletAddress as string },
     });
 
     if (!user) {
       user = await db.user.create({
-        data: { walletAddress },
+        data: { 
+          walletAddress: walletAddress as string,
+          username: walletAddress as string,
+        },
       });
     }
 
@@ -106,15 +118,20 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const walletAddress = await getWalletAddress(request);
+    if (!walletAddress) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
     
-    // Get or create user with mock wallet address
     let user = await db.user.findUnique({
-      where: { walletAddress },
+      where: { walletAddress: walletAddress as string },
     });
 
     if (!user) {
       user = await db.user.create({
-        data: { walletAddress },
+        data: { 
+          walletAddress: walletAddress as string,
+          username: walletAddress as string,
+        },
       });
     }
 
@@ -156,15 +173,20 @@ export async function PATCH(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const walletAddress = await getWalletAddress(request);
+    if (!walletAddress) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
     
-    // Get or create user with mock wallet address
     let user = await db.user.findUnique({
-      where: { walletAddress },
+      where: { walletAddress: walletAddress as string },
     });
 
     if (!user) {
       user = await db.user.create({
-        data: { walletAddress },
+        data: { 
+          walletAddress: walletAddress as string,
+          username: walletAddress as string,
+        },
       });
     }
 

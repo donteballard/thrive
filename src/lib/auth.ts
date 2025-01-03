@@ -1,12 +1,16 @@
 import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 
-// For development, we'll use a mock wallet address
-const MOCK_WALLET_ADDRESS = "11111111111111111111111111111111";
+export async function getWalletAddress(request: Request | NextRequest): Promise<string | null> {
+  // In production, get the actual wallet address from cookies
+  const cookieStore = cookies();
+  const walletAddress = cookieStore.get('wallet_address')?.value;
+  
+  if (!walletAddress) {
+    return null;
+  }
 
-export async function getWalletAddress(request: Request | NextRequest): Promise<string> {
-  // For development, always return the mock wallet address
-  return MOCK_WALLET_ADDRESS;
+  return walletAddress;
 }
 
 export async function setWalletAddress(walletAddress: string) {
@@ -20,4 +24,10 @@ export async function setWalletAddress(walletAddress: string) {
 
 export async function clearWalletAddress() {
   cookies().delete('wallet_address');
+}
+
+// Helper function to format wallet address for display
+export function formatWalletAddress(address: string): string {
+  if (!address) return '';
+  return `${address.slice(0, 4)}...${address.slice(-4)}`;
 } 

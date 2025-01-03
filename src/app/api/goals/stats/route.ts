@@ -6,15 +6,21 @@ import { getWalletAddress } from '@/lib/auth';
 export async function GET(request: Request) {
   try {
     const walletAddress = await getWalletAddress(request);
+    if (!walletAddress) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
     
-    // Get or create user with mock wallet address
+    // Now TypeScript knows walletAddress is definitely a string
     let user = await db.user.findUnique({
       where: { walletAddress },
     });
 
     if (!user) {
       user = await db.user.create({
-        data: { walletAddress },
+        data: { 
+          walletAddress,
+          username: walletAddress, // Use full wallet address as username
+        },
       });
     }
 

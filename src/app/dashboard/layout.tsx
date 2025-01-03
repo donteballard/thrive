@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { ClientWalletButton } from '@/components/wallet/ClientWalletButton';
 import { Suspense } from 'react';
@@ -11,6 +13,17 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { connected } = useWallet();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!connected) {
+      router.push('/');
+    }
+  }, [connected, router]);
+
+  if (!connected) {
+    return null; // Prevent flash of content while redirecting
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

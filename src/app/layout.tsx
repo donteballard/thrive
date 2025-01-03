@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClientProviders } from '@/components/providers/ClientProviders'
 import { Toaster } from 'sonner'
+import { WalletHandler } from '@/components/wallet/WalletHandler'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,8 +32,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ClientProviders>
-          {children}
+          <WalletHandler />
           <Toaster />
+          {children}
         </ClientProviders>
       </body>
     </html>

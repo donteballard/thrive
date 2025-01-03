@@ -1,20 +1,22 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  // During development, allow all requests
+export function middleware(request: NextRequest) {
+  // Get the wallet address from cookies
+  const walletAddress = request.cookies.get('wallet_address');
+
+  // Check if the path starts with /dashboard
+  if (request.nextUrl.pathname.startsWith('/dashboard')) {
+    // If no wallet address is found or it's invalid, redirect to home page
+    if (!walletAddress?.value || typeof walletAddress.value !== 'string') {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+  }
+
   return NextResponse.next();
 }
 
+// Configure which routes to run middleware on
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     */
-    "/((?!_next/static|_next/image|favicon.ico|public/).*)",
-  ],
+  matcher: '/dashboard/:path*',
 }; 
