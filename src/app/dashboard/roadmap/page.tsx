@@ -16,7 +16,7 @@ export default function RoadmapPage() {
         <div>
           <h1 className="text-2xl font-bold mb-2 dark:text-white">Development Roadmap</h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Track our progress and help shape the future of Thrive
+            Track our progress and help shape the future of Thraive
           </p>
         </div>
         <button

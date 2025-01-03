@@ -114,7 +114,7 @@ export function CommunityFeed({ items, onLike, onComment }: CommunityFeedProps) 
                 <div className="mt-4 flex items-center gap-2">
                   <Trophy className="w-4 h-4 text-yellow-500" />
                   <span className="text-sm font-medium text-gray-900 dark:text-white">
-                    +{item.content.reward} THRIVE
+                    +{item.content.reward} THRAIVE
                   </span>
                 </div>
               )}

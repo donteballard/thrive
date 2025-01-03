@@ -1,13 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Trophy, Star, Target, Zap, Award, Crown, Medal, Users, History, CheckCircle2, Clock } from 'lucide-react';
-import { AchievementUnlockModal } from '@/components/modals/AchievementUnlockModal';
-import { AchievementDetailsModal } from '@/components/modals/AchievementDetailsModal';
+import { useAchievements } from '@/hooks/useAchievements';
+import { ShareAchievementModal } from '@/components/modals/ShareAchievementModal';
+import { 
+  Achievement, 
+  AchievementRarity, 
+  AchievementCategory, 
+  TimelineEvent 
+} from '@/types/achievements';
 
-// Mock achievement data
-const mockAchievements = [
+// Mock data for testing until backend is ready
+const mockAchievements: Achievement[] = [
   {
     id: 1,
     title: 'Early Bird',
@@ -16,10 +22,10 @@ const mockAchievements = [
     progress: 100,
     earned: true,
     earnedDate: '2024-01-15',
-    rarity: 'Common',
+    rarity: 'Common' as AchievementRarity,
     tokenReward: 50,
-    category: 'Productivity',
-    requirements: ['Complete 5 tasks before 9 AM', 'Tasks must be completed between 5 AM and 9 AM', 'Tasks must be from your daily task list']
+    category: 'Productivity' as AchievementCategory,
+    requirements: ['Complete 5 tasks before 9 AM', 'Tasks must be completed between 5 AM and 9 AM']
   },
   {
     id: 2,
@@ -28,10 +34,10 @@ const mockAchievements = [
     icon: Target,
     progress: 66,
     earned: false,
-    rarity: 'Rare',
+    rarity: 'Rare' as AchievementRarity,
     tokenReward: 100,
-    category: 'Goals',
-    requirements: ['Create at least 3 goals', 'Goals must have clear success criteria', 'Goals must be completed within their set timeframe']
+    category: 'Goals' as AchievementCategory,
+    requirements: ['Create at least 3 goals', 'Goals must have clear success criteria']
   },
   {
     id: 3,
@@ -41,28 +47,13 @@ const mockAchievements = [
     progress: 100,
     earned: true,
     earnedDate: '2024-01-10',
-    rarity: 'Epic',
+    rarity: 'Epic' as AchievementRarity,
     tokenReward: 200,
-    category: 'Consistency',
-    requirements: ['Log in daily for 7 consecutive days', 'Complete at least one task each day', 'Maintain task completion rate above 80%']
-  },
-  {
-    id: 4,
-    title: 'Champion',
-    description: 'Complete all daily tasks for a month',
-    icon: Crown,
-    progress: 40,
-    earned: false,
-    rarity: 'Legendary',
-    tokenReward: 500,
-    category: 'Consistency',
-    requirements: ['Complete 100% of daily tasks', 'Maintain streak for 30 days', 'No tasks should be rescheduled']
-  },
+    category: 'Consistency' as AchievementCategory,
+    requirements: ['Log in daily for 7 consecutive days', 'Complete at least one task each day']
+  }
 ];
 
-const categories = ['All', 'Productivity', 'Goals', 'Consistency', 'Social'];
-
-// Mock leaderboard data
 const mockLeaderboard = [
   { 
     id: 1, 
@@ -84,32 +75,17 @@ const mockLeaderboard = [
     achievements: 20, 
     points: 2400, 
     avatar: '🥉'
-  },
-  { 
-    id: 4, 
-    address: '2ZjTR1vHHJqxsuiQwCSUoHNm3UQqfYVXVqNhZ1QY7qPm', 
-    achievements: 19, 
-    points: 2200, 
-    avatar: '🎯'
-  },
-  { 
-    id: 5, 
-    address: '4X4tFtEWJwVmPxGscvGN5DzGEDEEqNbVTALhRP5EpgVT', 
-    achievements: 18, 
-    points: 2000, 
-    avatar: '🎮'
-  },
+  }
 ];
 
-// Mock timeline data
-const mockTimeline = [
+const mockTimeline: TimelineEvent[] = [
   { 
     id: 1, 
     achievement: 'Early Bird', 
     date: '2024-01-15', 
     reward: 50,
     icon: Star,
-    rarity: 'Common'
+    rarity: 'Common' as AchievementRarity
   },
   { 
     id: 2, 
@@ -117,64 +93,77 @@ const mockTimeline = [
     date: '2024-01-10', 
     reward: 200,
     icon: Zap,
-    rarity: 'Epic'
-  },
-  // Add more timeline entries...
+    rarity: 'Epic' as AchievementRarity
+  }
 ];
 
-export default function AchievementsPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [showEarned, setShowEarned] = useState(true);
-  const [showUnearned, setShowUnearned] = useState(true);
-  const [activeTab, setActiveTab] = useState<'achievements' | 'leaderboard' | 'history'>('achievements');
-  const [selectedAchievement, setSelectedAchievement] = useState<any>(null);
-  const [showUnlockModal, setShowUnlockModal] = useState(false);
-  const [showDetailsModal, setShowDetailsModal] = useState(false);
+const mockStats = {
+  totalEarned: 2,
+  totalAchievements: 3,
+  totalTokens: 250
+};
 
-  const filteredAchievements = mockAchievements.filter(achievement => {
-    const matchesCategory = selectedCategory === 'All' || achievement.category === selectedCategory;
-    const matchesEarnedFilter = (achievement.earned && showEarned) || (!achievement.earned && showUnearned);
+const categories = ['All', 'Productivity', 'Goals', 'Consistency', 'Social'];
+
+export default function AchievementsPage() {
+  // Instead of using the hook directly, we'll use mock data for now
+  const [achievements] = useState(mockAchievements);
+  const [stats] = useState(mockStats);
+  const [leaderboard] = useState(mockLeaderboard);
+  const [timeline] = useState(mockTimeline);
+  const [loading] = useState(false);
+  const [error] = useState<string | null>(null);
+  const [filters, setFilters] = useState({
+    category: 'All',
+    showEarned: true,
+    showUnearned: true,
+  });
+
+  const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
+  const [showShareModal, setShowShareModal] = useState(false);
+
+  const handleAchievementClick = (achievement: Achievement) => {
+    setSelectedAchievement(achievement);
+    setShowShareModal(true);
+  };
+
+  const updateFilters = (newFilters: Partial<typeof filters>) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
+  };
+
+  const filteredAchievements = achievements.filter(achievement => {
+    const matchesCategory = filters.category === 'All' || achievement.category === filters.category;
+    const matchesEarnedFilter = 
+      (achievement.earned && filters.showEarned) || 
+      (!achievement.earned && filters.showUnearned);
     return matchesCategory && matchesEarnedFilter;
   });
 
-  const stats = {
-    totalEarned: mockAchievements.filter(a => a.earned).length,
-    totalAchievements: mockAchievements.length,
-    totalTokens: mockAchievements.filter(a => a.earned).reduce((sum, a) => sum + a.tokenReward, 0),
-  };
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
-  // Simulate achievement unlock after 2 seconds for demo purposes
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const unlockedAchievement = mockAchievements.find(a => !a.earned);
-      if (unlockedAchievement) {
-        setSelectedAchievement(unlockedAchievement);
-        setShowUnlockModal(true);
-      }
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleAchievementClick = (achievement: any) => {
-    setSelectedAchievement(achievement);
-    setShowDetailsModal(true);
-  };
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
+        <Trophy className="w-12 h-12 text-gray-400 mb-4" />
+        <h2 className="text-xl font-semibold mb-2">Failed to Load Achievements</h2>
+        <p className="text-gray-600 dark:text-gray-400">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
-      {/* Achievement Unlock Modal */}
-      <AchievementUnlockModal
-        isOpen={showUnlockModal}
-        onClose={() => setShowUnlockModal(false)}
-        achievement={selectedAchievement}
-      />
-
-      {/* Achievement Details Modal */}
-      <AchievementDetailsModal
-        isOpen={showDetailsModal}
+      {/* Rest of the component remains the same, but use filteredAchievements instead of achievements */}
+      <ShareAchievementModal
+        isOpen={showShareModal}
         onClose={() => {
-          setShowDetailsModal(false);
+          setShowShareModal(false);
           setSelectedAchievement(null);
         }}
         achievement={selectedAchievement}
@@ -182,325 +171,245 @@ export default function AchievementsPage() {
 
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold dark:text-white">Achievements</h1>
-        <p className="text-gray-600 dark:text-gray-400">Track your progress and earn rewards</p>
+        <h1 className="text-2xl font-bold">Achievements</h1>
+        <p className="text-muted-foreground">Track your progress and earn rewards</p>
       </div>
 
       {/* Stats Overview */}
-      <div className="grid gap-6 md:grid-cols-3">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm"
-        >
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-blue-100 dark:bg-blue-900/50 rounded-lg">
-              <Trophy className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+      {stats && (
+        <div className="grid gap-6 md:grid-cols-3">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="p-6 bg-background rounded-xl shadow-sm border border-border"
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-500/10 dark:bg-blue-500/20 rounded-lg">
+                <Trophy className="w-6 h-6 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Achievements Earned</p>
+                <h3 className="text-2xl font-bold">
+                  {stats.totalEarned}/{stats.totalAchievements}
+                </h3>
+              </div>
             </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Achievements Earned</p>
-              <h3 className="text-2xl font-bold dark:text-white">
-                {stats.totalEarned}/{stats.totalAchievements}
-              </h3>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm"
-        >
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-purple-100 dark:bg-purple-900/50 rounded-lg">
-              <Medal className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="p-6 bg-background rounded-xl shadow-sm border border-border"
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-500/10 dark:bg-blue-500/20 rounded-lg">
+                <Medal className="w-6 h-6 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Completion Rate</p>
+                <h3 className="text-2xl font-bold">
+                  {Math.round((stats.totalEarned / stats.totalAchievements) * 100)}%
+                </h3>
+              </div>
             </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Completion Rate</p>
-              <h3 className="text-2xl font-bold dark:text-white">
-                {Math.round((stats.totalEarned / stats.totalAchievements) * 100)}%
-              </h3>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm"
-        >
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-green-100 dark:bg-green-900/50 rounded-lg">
-              <Award className="w-6 h-6 text-green-600 dark:text-green-400" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="p-6 bg-background rounded-xl shadow-sm border border-border"
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-500/10 dark:bg-blue-500/20 rounded-lg">
+                <Award className="w-6 h-6 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Tokens Earned</p>
+                <h3 className="text-2xl font-bold">{stats.totalTokens}</h3>
+              </div>
             </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Tokens Earned</p>
-              <h3 className="text-2xl font-bold dark:text-white">{stats.totalTokens}</h3>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+          </motion.div>
+        </div>
+      )}
 
       {/* Main Navigation */}
-      <div className="border-b border-gray-200 dark:border-gray-700">
+      <div className="border-b border-border">
         <nav className="flex gap-4">
-          <button
-            onClick={() => setActiveTab('achievements')}
-            className={`px-4 py-2 font-medium border-b-2 transition-colors ${
-              activeTab === 'achievements'
-                ? 'border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400'
-                : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
-            }`}
-          >
-            Achievements
-          </button>
-          <button
-            onClick={() => setActiveTab('leaderboard')}
-            className={`px-4 py-2 font-medium border-b-2 transition-colors ${
-              activeTab === 'leaderboard'
-                ? 'border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400'
-                : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
-            }`}
-          >
-            Leaderboard
-          </button>
-          <button
-            onClick={() => setActiveTab('history')}
-            className={`px-4 py-2 font-medium border-b-2 transition-colors ${
-              activeTab === 'history'
-                ? 'border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400'
-                : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
-            }`}
-          >
-            History
-          </button>
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => updateFilters({ category })}
+              className={`px-4 py-2 font-medium border-b-2 transition-colors ${
+                filters.category === category
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
         </nav>
       </div>
 
-      {activeTab === 'achievements' && (
-        <>
-          {/* Filters */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            {/* Categories */}
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-lg whitespace-nowrap ${
-                    selectedCategory === category
-                      ? 'bg-blue-600 dark:bg-blue-500 text-white'
-                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
+      {/* Status Filter */}
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 bg-background rounded-lg border border-border p-1">
+          <button
+            onClick={() => updateFilters({ showEarned: true, showUnearned: false })}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
+              filters.showEarned && !filters.showUnearned
+                ? 'bg-primary text-primary-foreground'
+                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            }`}
+          >
+            <CheckCircle2 className="w-4 h-4" />
+            <span className="text-sm">Earned</span>
+          </button>
+          <button
+            onClick={() => updateFilters({ showEarned: false, showUnearned: true })}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
+              !filters.showEarned && filters.showUnearned
+                ? 'bg-primary text-primary-foreground'
+                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            }`}
+          >
+            <Clock className="w-4 h-4" />
+            <span className="text-sm">In Progress</span>
+          </button>
+          <button
+            onClick={() => updateFilters({ showEarned: true, showUnearned: true })}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
+              filters.showEarned && filters.showUnearned
+                ? 'bg-primary text-primary-foreground'
+                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            }`}
+          >
+            <span className="text-sm">All</span>
+          </button>
+        </div>
+      </div>
 
-            {/* Status Filter */}
-            <div className="flex items-center gap-2 ml-auto">
-              <div className="flex items-center gap-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-1">
-                <button
-                  onClick={() => {
-                    setShowEarned(true);
-                    setShowUnearned(false);
-                  }}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
-                    showEarned && !showUnearned
-                      ? 'bg-blue-600 dark:bg-blue-500 text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span className="text-sm">Earned</span>
-                </button>
-                <button
-                  onClick={() => {
-                    setShowEarned(false);
-                    setShowUnearned(true);
-                  }}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
-                    !showEarned && showUnearned
-                      ? 'bg-blue-600 dark:bg-blue-500 text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <Clock className="w-4 h-4" />
-                  <span className="text-sm">In Progress</span>
-                </button>
-                <button
-                  onClick={() => {
-                    setShowEarned(true);
-                    setShowUnearned(true);
-                  }}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
-                    showEarned && showUnearned
-                      ? 'bg-blue-600 dark:bg-blue-500 text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <span className="text-sm">All</span>
-                </button>
+      {/* Achievement Cards */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {filteredAchievements.map((achievement) => (
+          <motion.div
+            key={achievement.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`group relative bg-background rounded-xl p-6 shadow-sm border border-border hover:shadow-md transition-shadow ${
+              achievement.earned ? 'bg-primary/5' : ''
+            }`}
+            onClick={() => handleAchievementClick(achievement)}
+          >
+            <div className="flex items-start gap-4">
+              <div className={`p-3 rounded-xl ${
+                achievement.rarity === 'Common' ? 'bg-blue-500/10 dark:bg-blue-500/20' :
+                achievement.rarity === 'Rare' ? 'bg-blue-500/10 dark:bg-blue-500/20' :
+                'bg-blue-500/10 dark:bg-blue-500/20'
+              }`}>
+                <achievement.icon className={`w-6 h-6 ${
+                  achievement.rarity === 'Common' ? 'text-blue-500' :
+                  achievement.rarity === 'Rare' ? 'text-blue-500' :
+                  'text-blue-500'
+                }`} />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">{achievement.title}</h3>
+                  <span className={`text-xs font-medium px-2 py-1 rounded-full ${
+                    achievement.rarity === 'Common' ? 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-500' :
+                    achievement.rarity === 'Rare' ? 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-500' :
+                    'bg-blue-500/10 dark:bg-blue-500/20 text-blue-500'
+                  }`}>
+                    {achievement.rarity}
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground mt-1">{achievement.description}</p>
+                
+                <div className="mt-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm text-muted-foreground">Progress</span>
+                    <span className="text-sm font-medium">{achievement.progress}%</span>
+                  </div>
+                  <div className="h-2 bg-muted rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-blue-500 rounded-full transition-all duration-500"
+                      style={{ width: `${achievement.progress}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Trophy className="w-4 h-4 text-blue-500" />
+                    <span className="text-sm font-medium text-blue-500">
+                      +{achievement.tokenReward} THRAIVE
+                    </span>
+                  </div>
+                  {achievement.earned && (
+                    <span className="text-xs text-muted-foreground">
+                      Earned {new Date(achievement.earnedDate!).toLocaleDateString()}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
+        ))}
+      </div>
 
-          {/* Achievements Grid */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredAchievements.map((achievement) => (
-              <motion.div
-                key={achievement.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm cursor-pointer hover:shadow-md transition-all"
-                onClick={() => handleAchievementClick(achievement)}
+      {/* Leaderboard */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold mb-4">Leaderboard</h2>
+        <div className="bg-background rounded-xl shadow-sm border border-border overflow-hidden">
+          <div className="p-4 space-y-4">
+            {leaderboard.map((user, index) => (
+              <div
+                key={user.id}
+                className="flex items-center justify-between p-3 rounded-lg hover:bg-accent/50 transition-colors"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex items-start gap-3">
-                    <div className={`p-2 rounded-lg ${
-                      achievement.earned 
-                        ? 'bg-green-100 dark:bg-green-900/50' 
-                        : 'bg-blue-100 dark:bg-blue-900/50'
-                    }`}>
-                      <achievement.icon className={`w-5 h-5 ${
-                        achievement.earned 
-                          ? 'text-green-600 dark:text-green-400' 
-                          : 'text-blue-600 dark:text-blue-400'
-                      }`} />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold dark:text-white">{achievement.title}</h3>
-                      <span className={`text-sm ${
-                        achievement.rarity === 'Common' ? 'text-gray-600 dark:text-gray-400' :
-                        achievement.rarity === 'Rare' ? 'text-blue-600 dark:text-blue-400' :
-                        achievement.rarity === 'Epic' ? 'text-purple-600 dark:text-purple-400' :
-                        'text-yellow-600 dark:text-yellow-400'
-                      }`}>
-                        {achievement.rarity}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 text-yellow-600 dark:text-yellow-400">
-                    <Trophy className="w-4 h-4" />
-                    <span className="text-sm font-medium">{achievement.tokenReward}</span>
+                <div className="flex items-center gap-4">
+                  <span className="text-2xl">{user.avatar}</span>
+                  <div>
+                    <p className="font-medium">{user.address.slice(0, 4)}...{user.address.slice(-4)}</p>
+                    <p className="text-sm text-muted-foreground">{user.achievements} achievements</p>
                   </div>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                  {achievement.description}
-                </p>
-                {!achievement.earned && (
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600 dark:text-gray-400">Progress</span>
-                      <span className="font-medium dark:text-white">{achievement.progress}%</span>
-                    </div>
-                    <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full">
-                      <div
-                        className="h-full bg-blue-600 dark:bg-blue-500 rounded-full"
-                        style={{ width: `${achievement.progress}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
-                {achievement.earned && achievement.earnedDate && (
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
-                    Earned on {new Date(achievement.earnedDate).toLocaleDateString()}
-                  </div>
-                )}
-              </motion.div>
+                <p className="font-semibold text-blue-500">{user.points} pts</p>
+              </div>
             ))}
           </div>
-        </>
-      )}
+        </div>
+      </div>
 
-      {activeTab === 'leaderboard' && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
-          <div className="p-6">
-            <h2 className="text-lg font-semibold dark:text-white mb-6">Top Achievers</h2>
-            <div className="space-y-4">
-              {mockLeaderboard.map((user, index) => (
-                <div
-                  key={user.id}
-                  className="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 flex items-center justify-center text-2xl">
-                      {user.avatar}
-                    </div>
-                    <div>
-                      <h3 className="font-medium dark:text-white">
-                        {user.address.slice(0, 4)}...{user.address.slice(-4)}
-                      </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {user.achievements} achievements
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-yellow-600 dark:text-yellow-400">
-                    <Trophy className="w-4 h-4" />
-                    <span className="font-medium">{user.points}</span>
-                  </div>
+      {/* Timeline */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
+        <div className="space-y-4">
+          {timeline.map((event) => (
+            <div
+              key={event.id}
+              className="flex items-center gap-4 p-4 bg-background rounded-xl shadow-sm border border-border hover:bg-accent/50 transition-colors"
+            >
+              <div className="p-2 rounded-lg bg-blue-500/10 dark:bg-blue-500/20">
+                <event.icon className="w-5 h-5 text-blue-500" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-medium">{event.achievement}</h3>
+                  <span className="text-sm text-muted-foreground">
+                    {new Date(event.date).toLocaleDateString()}
+                  </span>
                 </div>
-              ))}
+                <p className="text-sm text-blue-500 mt-1">+{event.reward} THRAIVE</p>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
-      )}
-
-      {activeTab === 'history' && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
-          <div className="p-8">
-            <h2 className="text-lg font-semibold dark:text-white mb-8">Achievement History</h2>
-            <div className="space-y-12">
-              {mockTimeline.map((event, index) => {
-                const Icon = event.icon;
-                return (
-                  <div key={event.id} className="relative pl-16">
-                    {index !== mockTimeline.length - 1 && (
-                      <div className="absolute left-[20px] top-14 bottom-[-48px] w-px bg-gray-200 dark:bg-gray-700" />
-                    )}
-                    <div className="relative">
-                      <div className="absolute left-[-44px] top-1 p-2 bg-white dark:bg-gray-800">
-                        <div className={`p-2.5 rounded-full ${
-                          event.rarity === 'Common' ? 'bg-gray-100 dark:bg-gray-700' :
-                          event.rarity === 'Rare' ? 'bg-blue-100 dark:bg-blue-900/50' :
-                          event.rarity === 'Epic' ? 'bg-purple-100 dark:bg-purple-900/50' :
-                          'bg-yellow-100 dark:bg-yellow-900/50'
-                        }`}>
-                          <Icon className={`w-6 h-6 ${
-                            event.rarity === 'Common' ? 'text-gray-600 dark:text-gray-400' :
-                            event.rarity === 'Rare' ? 'text-blue-600 dark:text-blue-400' :
-                            event.rarity === 'Epic' ? 'text-purple-600 dark:text-purple-400' :
-                            'text-yellow-600 dark:text-yellow-400'
-                          }`} />
-                        </div>
-                      </div>
-                      <div className="space-y-2 ml-4">
-                        <h3 className="text-xl font-medium dark:text-white">{event.achievement}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {new Date(event.date).toLocaleDateString('en-US', {
-                            month: 'numeric',
-                            day: 'numeric',
-                            year: 'numeric'
-                          })}
-                        </p>
-                        <div className="flex items-center gap-2 text-yellow-600 dark:text-yellow-400">
-                          <Trophy className="w-5 h-5" />
-                          <span className="text-base font-medium">+{event.reward}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 } 

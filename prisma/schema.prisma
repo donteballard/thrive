@@ -1,0 +1,182 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(cuid())
+  walletAddress   String    @unique
+  username        String?   @unique
+  avatar          String?
+  bio             String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  goals           Goal[]
+  achievements    Achievement[]
+  stats           UserStats?
+  sharedGoals     SharedGoal[]
+  activityFeed    ActivityFeed[]
+  activities      Activity[]
+  stakings        UserStaking[]
+  rewards         RewardTransaction[]
+}
+
+model Goal {
+  id              Int      @id @default(autoincrement())
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String
+  title           String
+  description     String
+  category        String
+  progress        Int      @default(0)
+  status          String   @default("Not Started")
+  dueDate         DateTime
+  milestones      String[]
+  visibility      String   @default("private")
+  allowComments   Boolean  @default(true)
+  allowDuplication Boolean @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Achievement {
+  id              Int      @id @default(autoincrement())
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String
+  title           String
+  description     String
+  type            String
+  category        String
+  rarity          String
+  progress        Int      @default(0)
+  earned          Boolean  @default(false)
+  earnedDate      DateTime?
+  tokenReward     Int
+  requirements    String[]
+  icon            String
+  points          Int
+  data            Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model UserStats {
+  id             Int      @id @default(autoincrement())
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String   @unique
+  goalsCompleted Int      @default(0)
+  goalsShared    Int      @default(0)
+  totalPoints    Int      @default(0)
+  currentStreak  Int      @default(0)
+  longestStreak  Int      @default(0)
+  updatedAt      DateTime @updatedAt
+}
+
+model SharedGoal {
+  id              Int      @id @default(autoincrement())
+  goalId          Int
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String
+  visibility      String
+  message         String?
+  allowComments   Boolean  @default(true)
+  allowDuplication Boolean @default(true)
+  createdAt       DateTime @default(now())
+}
+
+model ActivityFeed {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  type      String
+  data      Json
+  createdAt DateTime @default(now())
+}
+
+model Activity {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  type        String   // 'task' | 'goal_progress' | 'achievement'
+  title       String
+  description String
+  status      String?  // 'completed' | 'in_progress' | 'pending'
+  progress    Int?
+  points      Int
+  category    String
+  duration    Int?     // Duration in minutes
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Rewards Models
+model StakingTier {
+  id            String        @id @default(cuid())
+  name          String
+  requiredTokens Int
+  benefits      String[]
+  color         String
+  apy           Float
+  lockPeriod    Int
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  userStakings  UserStaking[]
+}
+
+model UserStaking {
+  id              String      @id @default(cuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  tokenBalance    Int
+  stakedAmount    Int
+  stakingTier     StakingTier @relation(fields: [tierId], references: [id])
+  tierId          String
+  stakingApy      Float
+  nextReward      Int
+  nextRewardDate  DateTime
+  lockEndDate     DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  rewards         RewardTransaction[]
+
+  @@index([userId])
+  @@index([tierId])
+}
+
+model RewardTransaction {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  userStaking UserStaking @relation(fields: [stakingId], references: [id])
+  stakingId   String
+  type        String      // 'achievement' | 'streak' | 'staking' | 'referral'
+  title       String
+  amount      Int
+  status      String      // 'completed' | 'pending'
+  date        DateTime
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([stakingId])
+}
+
+model StakingStats {
+  id            String   @id @default(cuid())
+  totalStaked   Int
+  averageApy    Float
+  totalStakers  Int
+  tvl           Int
+  updatedAt     DateTime @updatedAt
+  createdAt     DateTime @default(now())
+}

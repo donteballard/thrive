@@ -71,7 +71,7 @@ export function WelcomeModal({ isOpen, onClose, onGetStarted }: WelcomeModalProp
           </button>
 
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4 dark:text-white">Welcome to Thrive! 🎉</h2>
+            <h2 className="text-2xl font-bold mb-4 dark:text-white">Welcome to Thraive! 🎉</h2>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
               You're now connected and ready to start your journey towards a better you.
               Let's get you set up with your personalized dashboard.
@@ -104,7 +104,7 @@ export function WelcomeModal({ isOpen, onClose, onGetStarted }: WelcomeModalProp
                 </div>
                 <div>
                   <h3 className="font-medium dark:text-white">Earn Rewards</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Get THRIVE tokens for your achievements</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Get THRAIVE tokens for your achievements</p>
                 </div>
               </div>
             </div>

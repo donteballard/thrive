@@ -57,52 +57,52 @@ export function AchievementUnlockModal({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="relative w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-xl shadow-xl"
+          className="relative w-full max-w-md p-6 bg-background rounded-xl shadow-xl border border-border"
         >
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="absolute top-4 right-4 p-2 rounded-lg hover:bg-muted transition-colors"
           >
-            <X className="w-5 h-5 dark:text-gray-400" />
+            <X className="w-5 h-5 text-muted-foreground" />
           </button>
 
           <div className="text-center">
             <div className="mb-4">
               <span className="text-4xl">🏆</span>
             </div>
-            <h2 className="text-2xl font-bold mb-2 dark:text-white">Achievement Unlocked!</h2>
-            <h3 className="text-xl font-semibold mb-4 text-blue-600 dark:text-blue-400">
+            <h2 className="text-2xl font-bold mb-2">Achievement Unlocked!</h2>
+            <h3 className="text-xl font-semibold mb-4 text-primary">
               {achievement.title}
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
+            <p className="text-muted-foreground mb-4">
               {achievement.description}
             </p>
             <div className="space-y-2 mb-6">
               <div className="flex items-center justify-center gap-2">
-                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <span className="text-sm font-medium text-muted-foreground">
                   Rarity:
                 </span>
-                <span className="text-sm font-semibold text-purple-600 dark:text-purple-400">
+                <span className="text-sm font-semibold text-primary">
                   {achievement.rarity}
                 </span>
               </div>
               <div className="flex items-center justify-center gap-2">
-                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <span className="text-sm font-medium text-muted-foreground">
                   Reward:
                 </span>
-                <span className="text-sm font-semibold text-green-600 dark:text-green-400">
-                  {achievement.tokenReward} THRIVE
+                <span className="text-sm font-semibold text-primary">
+                  {achievement.tokenReward} THRAIVE
                 </span>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-500 dark:hover:bg-blue-600"
+              className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
             >
               Awesome!
             </button>

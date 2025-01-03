@@ -2,11 +2,12 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClientProviders } from '@/components/providers/ClientProviders'
+import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Thrive - AI-Powered Life Optimization',
+  title: 'Thraive - AI-Powered Life Optimization',
   description: 'Get paid to become your best self with AI-powered guidance and blockchain rewards.',
   icons: {
     icon: '/favicon.ico',
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ClientProviders>
           {children}
+          <Toaster />
         </ClientProviders>
       </body>
     </html>

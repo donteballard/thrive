@@ -127,6 +127,8 @@ export function Sidebar() {
           </div>
           <div className="flex-shrink-0 flex border-t border-gray-200 dark:border-gray-700 p-4">
             <ThemeToggle />
+            <br />
+            <p className="text-xs text-gray-500 dark:text-gray-400">Made With ❤ By the Thraive Team</p>
           </div>
         </div>
       </div>

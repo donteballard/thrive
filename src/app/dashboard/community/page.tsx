@@ -200,7 +200,7 @@ export default function CommunityPage() {
             </div>
             <div>
               <p className="text-sm text-gray-600 dark:text-gray-400">Total Rewards</p>
-              <p className="text-xl font-bold dark:text-white">{communityStats.totalRewards} THRIVE</p>
+              <p className="text-xl font-bold dark:text-white">{communityStats.totalRewards} THRAIVE</p>
             </div>
           </div>
         </motion.div>

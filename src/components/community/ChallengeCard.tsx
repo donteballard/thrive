@@ -93,7 +93,7 @@ export function ChallengeCard({ challenge, onJoin }: ChallengeCardProps) {
           <div className="flex items-center gap-2">
             <Trophy className="w-4 h-4 text-yellow-500" />
             <span className="text-sm font-medium text-gray-900 dark:text-white">
-              {challenge.reward} THRIVE
+              {challenge.reward} THRAIVE
             </span>
           </div>
           {onJoin && (

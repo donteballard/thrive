@@ -240,7 +240,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-4xl font-bold text-center mb-12 dark:text-white"
           >
-            Why Choose Thrive?
+            Why Choose Thraive?
           </motion.h2>
           <div className="grid md:grid-cols-3 gap-8">
             <motion.div
@@ -264,7 +264,7 @@ export default function Home() {
               <FeatureCard
                 icon={<Coins className="w-8 h-8 text-blue-600 dark:text-blue-400" />}
                 title="Earn Rewards"
-                description="Complete tasks and challenges to earn THRIVE tokens"
+                description="Complete tasks and challenges to earn THRAIVE tokens"
               />
             </motion.div>
             <motion.div
@@ -423,7 +423,7 @@ export default function Home() {
                 </h4>
                 <div className="flex space-x-4">
                   <a
-                    href="https://x.com"
+                    href="https://x.com/thraivedotapp"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 text-blue-100 hover:text-white transition-colors"
@@ -456,7 +456,7 @@ export default function Home() {
                     </svg>
                   </a>
                   <a
-                    href="https://t.me/thrive"
+                    href="https://t.me/thraivedotapp"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 text-blue-100 hover:text-white transition-colors"
@@ -480,7 +480,7 @@ export default function Home() {
             className="mt-12 pt-8 border-t border-blue-500 dark:border-blue-800"
           >
             <p className="text-center text-sm text-blue-100">
-              © {new Date().getFullYear()} Thrive. All rights reserved.
+              © {new Date().getFullYear()} Thraive. All rights reserved.
             </p>
           </motion.div>
         </div>
