@@ -218,14 +218,14 @@ export default function Home() {
                   <Suspense fallback={<div className="h-[44px] w-[140px] bg-gray-100 dark:bg-gray-700 rounded-md animate-pulse" />}>
                     <ClientWalletButton />
                   </Suspense>
-                  <button 
-                    onClick={() => handleNavClick('features')}
-                    className="h-[44px] min-w-[140px] px-6 bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 rounded-md border-2 border-blue-600 dark:border-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors font-semibold"
-                  >
-                    Learn More
-                  </button>
                 </>
               )}
+              <button 
+                onClick={() => handleNavClick('features')}
+                className="h-[44px] min-w-[140px] px-6 bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 rounded-md border-2 border-blue-600 dark:border-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors font-semibold"
+              >
+                Learn More
+              </button>
             </motion.div>
           </div>
         </motion.div>

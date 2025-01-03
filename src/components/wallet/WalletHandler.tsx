@@ -3,9 +3,11 @@
 import { useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export function WalletHandler() {
   const { publicKey } = useWallet();
+  const router = useRouter();
 
   useEffect(() => {
     const handleWalletConnection = async () => {
@@ -35,6 +37,10 @@ export function WalletHandler() {
 
           const data = await response.json();
           console.log('Wallet connected:', data.user);
+          
+          // Redirect to dashboard after successful connection
+          router.push('/dashboard');
+          toast.success('Wallet connected successfully');
         } catch (error) {
           console.error('Wallet connection error:', error);
           toast.error('Failed to connect wallet. Please try again.');
@@ -43,7 +49,7 @@ export function WalletHandler() {
     };
 
     handleWalletConnection();
-  }, [publicKey]);
+  }, [publicKey, router]);
 
   return null;
 } 
