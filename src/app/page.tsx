@@ -12,6 +12,7 @@ import { RoadmapSection } from '@/components/landing/RoadmapSection';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { ClientWalletButton } from '@/components/wallet/ClientWalletButton';
 import { Logo } from '@/components/Logo';
+import { FallingLeaves } from '@/components/animations/FallingLeaves';
 
 interface FeatureCardProps {
   icon: ReactNode;
@@ -86,7 +87,7 @@ export default function Home() {
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-2xl font-bold text-blue-600 dark:text-blue-400"
+              className="text-2xl font-bold text-primary dark:text-primary"
             >
               <Logo />
             </motion.div>
@@ -95,25 +96,25 @@ export default function Home() {
             <div className="hidden md:flex items-center space-x-8">
               <button 
                 onClick={() => handleNavClick('features')}
-                className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
               >
                 Features
               </button>
               <button 
                 onClick={() => handleNavClick('how-it-works')}
-                className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
               >
                 How it Works
               </button>
               <button 
                 onClick={() => handleNavClick('roadmap')}
-                className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
               >
                 Roadmap
               </button>
               <button 
                 onClick={() => handleNavClick('stats')}
-                className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
               >
                 Stats
               </button>
@@ -148,25 +149,25 @@ export default function Home() {
             >
               <button 
                 onClick={() => handleNavClick('features')}
-                className="block w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="block w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800"
               >
                 Features
               </button>
               <button 
                 onClick={() => handleNavClick('how-it-works')}
-                className="block w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="block w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800"
               >
                 How it Works
               </button>
               <button 
                 onClick={() => handleNavClick('roadmap')}
-                className="block w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="block w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800"
               >
                 Roadmap
               </button>
               <button 
                 onClick={() => handleNavClick('stats')}
-                className="block w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="block w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800"
               >
                 Stats
               </button>
@@ -176,7 +177,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950">
+      <section className="relative pt-32 pb-20 px-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -188,7 +189,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 text-transparent bg-clip-text"
+              className="text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/80 text-transparent bg-clip-text"
             >
               Transform Your Life with AI
             </motion.h1>
@@ -215,7 +216,7 @@ export default function Home() {
               )}
               <button 
                 onClick={() => handleNavClick('features')}
-                className="h-[44px] min-w-[140px] px-6 bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 rounded-md border-2 border-blue-600 dark:border-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors font-semibold"
+                className="h-[44px] min-w-[140px] px-6 bg-white dark:bg-gray-800 text-primary dark:text-primary rounded-md border-2 border-primary dark:border-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-semibold"
               >
                 Learn More
               </button>
@@ -225,8 +226,9 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto">
+      <section id="features" className="py-20 px-4 bg-white dark:bg-gray-900 relative overflow-hidden">
+        <FallingLeaves section="features" />
+        <div className="max-w-7xl mx-auto relative">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -243,7 +245,7 @@ export default function Home() {
               transition={{ delay: 0.2 }}
             >
               <FeatureCard
-                icon={<Brain className="w-8 h-8 text-blue-600 dark:text-blue-400" />}
+                icon={<Brain className="w-8 h-8 text-primary dark:text-primary" />}
                 title="AI Life Coach"
                 description="Get personalized guidance and insights from our advanced AI system"
               />
@@ -255,7 +257,7 @@ export default function Home() {
               transition={{ delay: 0.3 }}
             >
               <FeatureCard
-                icon={<Coins className="w-8 h-8 text-blue-600 dark:text-blue-400" />}
+                icon={<Coins className="w-8 h-8 text-primary dark:text-primary" />}
                 title="Earn Rewards"
                 description="Complete tasks and challenges to earn THRAIVE tokens"
               />
@@ -267,7 +269,7 @@ export default function Home() {
               transition={{ delay: 0.4 }}
             >
               <FeatureCard
-                icon={<LineChart className="w-8 h-8 text-blue-600 dark:text-blue-400" />}
+                icon={<LineChart className="w-8 h-8 text-primary dark:text-primary" />}
                 title="Track Progress"
                 description="Monitor your growth with detailed analytics and insights"
               />
@@ -289,10 +291,10 @@ export default function Home() {
           </motion.h2>
           <div className="grid md:grid-cols-4 gap-8">
             {[
-              { number: "1", icon: <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />, title: "Connect Wallet", desc: "Link your Solana wallet" },
-              { number: "2", icon: <Target className="w-6 h-6 text-blue-600 dark:text-blue-400" />, title: "Set Goals", desc: "Define your objectives" },
-              { number: "3", icon: <Sparkles className="w-6 h-6 text-blue-600 dark:text-blue-400" />, title: "Complete Tasks", desc: "Follow AI guidance" },
-              { number: "4", icon: <TrendingUp className="w-6 h-6 text-blue-600 dark:text-blue-400" />, title: "Earn & Grow", desc: "Get rewarded" }
+              { number: "1", icon: <Users className="w-6 h-6 text-primary dark:text-primary" />, title: "Connect Wallet", desc: "Link your Solana wallet" },
+              { number: "2", icon: <Target className="w-6 h-6 text-primary dark:text-primary" />, title: "Set Goals", desc: "Define your objectives" },
+              { number: "3", icon: <Sparkles className="w-6 h-6 text-primary dark:text-primary" />, title: "Complete Tasks", desc: "Follow AI guidance" },
+              { number: "4", icon: <TrendingUp className="w-6 h-6 text-primary dark:text-primary" />, title: "Earn & Grow", desc: "Get rewarded" }
             ].map((step, index) => (
               <motion.div
                 key={step.number}
@@ -314,7 +316,10 @@ export default function Home() {
       </section>
 
       {/* Roadmap Section */}
-      <RoadmapSection />
+      <section id="roadmap" className="py-20 px-4 bg-white dark:bg-gray-900 relative overflow-hidden">
+        <FallingLeaves section="roadmap" />
+        <RoadmapSection />
+      </section>
 
       {/* Stats Section */}
       <section id="stats" className="py-20 px-4 bg-gray-50 dark:bg-gray-800">
@@ -339,7 +344,7 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className="p-6 bg-white dark:bg-gray-700 rounded-xl shadow-sm"
               >
-                <div className="text-3xl font-bold mb-2 text-blue-600 dark:text-blue-400">
+                <div className="text-3xl font-bold mb-2 text-primary dark:text-primary">
                   {stat.number}
                 </div>
                 <div className="text-gray-600 dark:text-gray-300">{stat.label}</div>
@@ -350,7 +355,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 bg-blue-600 dark:bg-blue-900">
+      <footer className="py-12 px-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Branding & Description */}
@@ -360,8 +365,8 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <Logo className="mb-4 text-white [&>span]:text-white dark:[&>span]:text-white" />
-                <p className="text-blue-100 dark:text-blue-100 mb-6 max-w-md">
+                <Logo className="mb-4 text-gray-900 [&>span]:text-gray-900 dark:[&>span]:text-white" />
+                <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
                   Transform your life with AI-powered guidance and blockchain rewards. Join our community of achievers today.
                 </p>
               </motion.div>
@@ -375,27 +380,27 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
               >
-                <h4 className="text-sm font-semibold text-white mb-4 uppercase">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase">
                   Quick Links
                 </h4>
                 <ul className="space-y-3">
                   <li>
-                    <button onClick={() => handleNavClick('features')} className="text-blue-100 hover:text-white transition-colors">
+                    <button onClick={() => handleNavClick('features')} className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors">
                       Features
                     </button>
                   </li>
                   <li>
-                    <button onClick={() => handleNavClick('how-it-works')} className="text-blue-100 hover:text-white transition-colors">
+                    <button onClick={() => handleNavClick('how-it-works')} className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors">
                       How it Works
                     </button>
                   </li>
                   <li>
-                    <button onClick={() => handleNavClick('roadmap')} className="text-blue-100 hover:text-white transition-colors">
+                    <button onClick={() => handleNavClick('roadmap')} className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors">
                       Roadmap
                     </button>
                   </li>
                   <li>
-                    <button onClick={() => handleNavClick('stats')} className="text-blue-100 hover:text-white transition-colors">
+                    <button onClick={() => handleNavClick('stats')} className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors">
                       Stats
                     </button>
                   </li>
@@ -411,7 +416,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                <h4 className="text-sm font-semibold text-white mb-4 uppercase">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase">
                   Connect With Us
                 </h4>
                 <div className="flex space-x-4">
@@ -419,7 +424,7 @@ export default function Home() {
                     href="https://x.com/thraivedotapp"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 text-blue-100 hover:text-white transition-colors"
+                    className="p-2 text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors"
                     aria-label="X (formerly Twitter)"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -430,7 +435,7 @@ export default function Home() {
                     href="https://discord.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 text-blue-100 hover:text-white transition-colors"
+                    className="p-2 text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors"
                     aria-label="Discord"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -441,7 +446,7 @@ export default function Home() {
                     href="https://github.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 text-blue-100 hover:text-white transition-colors"
+                    className="p-2 text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors"
                     aria-label="GitHub"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -452,7 +457,7 @@ export default function Home() {
                     href="https://t.me/thraivedotapp"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 text-blue-100 hover:text-white transition-colors"
+                    className="p-2 text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors"
                     aria-label="Telegram"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -470,9 +475,9 @@ export default function Home() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="mt-12 pt-8 border-t border-blue-500 dark:border-blue-800"
+            className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700"
           >
-            <p className="text-center text-sm text-blue-100">
+            <p className="text-center text-sm text-gray-600 dark:text-gray-400">
               © {new Date().getFullYear()} Thraive. All rights reserved.
             </p>
           </motion.div>
@@ -495,7 +500,7 @@ function FeatureCard({ icon, title, description }: FeatureCardProps) {
 function StepCard({ number, icon, title, description }: StepCardProps) {
   return (
     <div className="relative p-6 rounded-lg bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
-      <div className="absolute -top-4 left-6 w-8 h-8 bg-blue-600 dark:bg-blue-500 text-white rounded-full flex items-center justify-center font-bold">
+      <div className="absolute -top-4 left-6 w-8 h-8 bg-primary dark:bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold">
         {number}
       </div>
       <div className="mt-4">
@@ -511,7 +516,7 @@ function StatCard({ number, label }: StatCardProps) {
   return (
     <div className="p-6">
       <div className="text-4xl font-bold mb-2">{number}</div>
-      <div className="text-blue-100">{label}</div>
+      <div className="text-gray-300">{label}</div>
     </div>
   );
 } 

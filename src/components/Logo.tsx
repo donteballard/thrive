@@ -19,7 +19,7 @@ export function Logo({ className = '', imageSize = 32 }: LogoProps) {
         className="rounded-md"
         quality={100}
       />
-      <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+      <span className="text-2xl font-bold text-white-600 dark:text-white-400">
         Thraive
       </span>
     </Link>

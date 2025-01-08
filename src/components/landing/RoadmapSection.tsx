@@ -5,7 +5,7 @@ import { RoadmapTimeline } from '@/components/roadmap/RoadmapTimeline';
 
 export function RoadmapSection() {
   return (
-    <section id="roadmap" className="py-20 bg-gray-50 dark:bg-gray-900">
+    <section id="roadmap" className="py-20 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -15,7 +15,7 @@ export function RoadmapSection() {
         >
           <h2 className="text-4xl font-bold mb-6 dark:text-white">
             Building the Future of{' '}
-            <span className="text-blue-600 dark:text-blue-400">Self-Improvement</span>
+            <span className="text-primary dark:text-primary">Self-Improvement</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400">
             Our development roadmap outlines our journey to create the most comprehensive platform for personal growth and achievement.
@@ -37,7 +37,7 @@ export function RoadmapSection() {
             href="https://github.com/yourusername/thrive"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary-foreground bg-primary hover:bg-[#02e02b] transition-colors"
           >
             Join Our Community
           </a>
