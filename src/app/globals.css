@@ -1,7 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #222222 #000000;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
