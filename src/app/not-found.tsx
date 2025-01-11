@@ -4,7 +4,7 @@ import { Logo } from '@/components/Logo';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-black dark:bg-gray-900 flex items-center justify-center px-4">
       <div className="text-center flex flex-col items-center">
         <div className="mb-8">
           <Logo />

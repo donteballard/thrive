@@ -1,12 +1,17 @@
 'use client';
 
+import { useWallet } from '@solana/wallet-adapter-react';
 import dynamic from 'next/dynamic';
 
 const WalletMultiButton = dynamic(
-  async () => (await import('@solana/wallet-adapter-react-ui')).WalletMultiButton,
+  async () => {
+    const { WalletMultiButton: Button } = await import('@solana/wallet-adapter-react-ui');
+    return Button;
+  },
   { ssr: false }
 );
 
 export function ClientWalletButton() {
-  return <WalletMultiButton />;
+  const { connected } = useWallet();
+  return <WalletMultiButton>{!connected && 'Launch App'}</WalletMultiButton>;
 } 

@@ -101,8 +101,16 @@ export function TreeOfLife() {
             transition={{ delay: 0.9 }}
             className="flex justify-center gap-4 mb-32"
           >
-            <button className="h-[44px] min-w-[140px] px-6 bg-primary hover:bg-primary/90 text-black rounded-md transition-colors font-semibold">
-              Start Growing
+            <button 
+              onClick={() => {
+                const roadmapSection = document.getElementById('roadmap');
+                if (roadmapSection) {
+                  roadmapSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="h-[44px] min-w-[140px] px-6 bg-primary hover:bg-primary/90 text-black rounded-md transition-colors font-semibold"
+            >
+              Learn More
             </button>
           </motion.div>
         </div>

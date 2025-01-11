@@ -15,7 +15,7 @@ export function Logo({ className, ...props }: LogoProps) {
         {letters.map((letter, i) => (
           <motion.span
             key={i}
-            className="text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(34,197,94,0.5)]"
+            className="text-transparent bg-clip-text drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]"
             style={{
               backgroundImage: "linear-gradient(to right, rgb(34 197 94), rgb(34 197 94 / 0.8))",
               backgroundSize: "200% 100%",
@@ -23,9 +23,9 @@ export function Logo({ className, ...props }: LogoProps) {
             animate={{
               backgroundPosition: ["100% 50%", "0% 50%", "100% 50%"],
               textShadow: [
-                "0 0 20px rgba(34,197,94,0.5)",
-                "0 0 30px rgba(34,197,94,0.8)",
-                "0 0 20px rgba(34,197,94,0.5)"
+                "0 0 10px rgba(34,197,94,0.5)",
+                "0 0 15px rgba(34,197,94,0.8)",
+                "0 0 10px rgba(34,197,94,0.5)"
               ]
             }}
             transition={{
