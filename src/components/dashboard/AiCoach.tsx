@@ -163,20 +163,20 @@ export function AiCoach() {
   }, [messages]);
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
+    <div className="bg-black rounded-xl shadow-sm overflow-hidden border border-green-800">
       {/* Header */}
       <div 
-        className="p-4 border-b dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+        className="p-4 border-b border-green-800 cursor-pointer hover:bg-green-900 transition-colors"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-              <Bot className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <div className="p-2 bg-primary/20 rounded-lg">
+              <Bot className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h2 className="font-semibold dark:text-white">AI Coach</h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Personalized recommendations</p>
+              <h2 className="font-semibold text-white">AI Coach</h2>
+              <p className="text-sm text-gray-400">Personalized recommendations</p>
             </div>
           </div>
           <button 
@@ -184,9 +184,9 @@ export function AiCoach() {
               e.stopPropagation();
               setIsExpanded(!isExpanded);
             }}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            className="p-2 hover:bg-green-900 rounded-lg transition-colors"
           >
-            <ChevronRight className={`w-5 h-5 text-gray-600 dark:text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+            <ChevronRight className={`w-5 h-5 text-white transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
           </button>
         </div>
       </div>
@@ -202,7 +202,7 @@ export function AiCoach() {
           {!showChat ? (
             <>
               {/* Category Filter */}
-              <div className="p-4 border-b dark:border-gray-700">
+              <div className="p-4 border-b border-green-800">
                 <div className="flex gap-2 overflow-x-auto pb-2">
                   {categories.map((category) => (
                     <button
@@ -210,8 +210,8 @@ export function AiCoach() {
                       onClick={() => setSelectedCategory(category)}
                       className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize whitespace-nowrap transition-colors
                         ${selectedCategory === category
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
+                          ? 'bg-primary text-black'
+                          : 'bg-primary/20 text-white hover:bg-primary hover:text-black'
                         }`}
                     >
                       {category}
@@ -229,20 +229,20 @@ export function AiCoach() {
                     animate={{ opacity: 1, y: 0 }}
                     className={`p-4 rounded-lg border ${
                       recommendation.priority === 'high'
-                        ? 'border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-900/20'
+                        ? 'border-red-900 bg-red-900/20'
                         : recommendation.priority === 'medium'
-                        ? 'border-yellow-200 dark:border-yellow-900/50 bg-yellow-50 dark:bg-yellow-900/20'
-                        : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800'
+                        ? 'border-yellow-900 bg-yellow-900/20'
+                        : 'border-green-800 bg-gray-900'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <h3 className="font-medium dark:text-white mb-1">{recommendation.title}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{recommendation.description}</p>
+                        <h3 className="font-medium text-white mb-1">{recommendation.title}</h3>
+                        <p className="text-sm text-gray-400">{recommendation.description}</p>
                         {recommendation.action && (
                           <a
                             href={recommendation.action.href}
-                            className="inline-flex items-center gap-2 mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+                            className="inline-flex items-center gap-2 mt-3 text-sm font-medium text-primary hover:text-primary/60"
                           >
                             {recommendation.action.label}
                             <ChevronRight className="w-4 h-4" />
@@ -250,19 +250,19 @@ export function AiCoach() {
                         )}
                       </div>
                       <div className={`p-2 rounded-lg ${
-                        recommendation.type === 'task' ? 'bg-blue-100 dark:bg-blue-900/30' :
-                        recommendation.type === 'insight' ? 'bg-purple-100 dark:bg-purple-900/30' :
-                        recommendation.type === 'suggestion' ? 'bg-green-100 dark:bg-green-900/30' :
-                        'bg-orange-100 dark:bg-orange-900/30'
+                        recommendation.type === 'task' ? 'bg-primary/20' :
+                        recommendation.type === 'insight' ? 'bg-primary/20' :
+                        recommendation.type === 'suggestion' ? 'bg-primary/20' :
+                        'bg-primary/20'
                       }`}>
                         {recommendation.type === 'task' ? (
-                          <Target className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                          <Target className="w-5 h-5 text-primary" />
                         ) : recommendation.type === 'insight' ? (
-                          <Brain className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                          <Brain className="w-5 h-5 text-primary" />
                         ) : recommendation.type === 'suggestion' ? (
-                          <MessageCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                          <MessageCircle className="w-5 h-5 text-primary" />
                         ) : (
-                          <Zap className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                          <Zap className="w-5 h-5 text-primary" />
                         )}
                       </div>
                     </div>
@@ -281,11 +281,11 @@ export function AiCoach() {
                   >
                     <div className={`max-w-[80%] rounded-lg p-3 ${
                       message.role === 'user'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                        ? 'bg-primary text-black'
+                        : 'bg-green-900 text-white'
                     }`}>
                       <p className="text-sm whitespace-pre-line">{message.content}</p>
-                      <p className="text-xs mt-1 opacity-70">
+                      <p className="text-black text-xs mt-1">
                         {new Date(message.timestamp).toLocaleTimeString()}
                       </p>
                     </div>
@@ -293,32 +293,32 @@ export function AiCoach() {
                 ))}
                 {isLoading && (
                   <div className="flex justify-start">
-                    <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
-                      <Loader2 className="w-5 h-5 animate-spin text-blue-600 dark:text-blue-400" />
+                    <div className="bg-black rounded-lg p-3">
+                      <Loader2 className="w-5 h-5 animate-spin text-primary" />
                     </div>
                   </div>
                 )}
                 {error && (
-                  <div className="text-center text-red-500 dark:text-red-400 text-sm">
+                  <div className="text-center text-red-400 text-sm">
                     {error}
                   </div>
                 )}
               </div>
 
-              <div className="p-4 border-t dark:border-gray-700">
+              <div className="p-4 border-t border-green-800">
                 <div className="flex gap-2">
                   <textarea
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Ask your AI coach..."
-                    className="flex-1 resize-none px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-1 resize-none px-3 py-2 rounded-lg bg-green-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
                     rows={1}
                   />
                   <button
                     onClick={handleSendMessage}
                     disabled={isLoading || !inputMessage.trim()}
-                    className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="p-2 bg-primary text-black rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Send className="w-5 h-5" />
                   </button>
@@ -328,10 +328,10 @@ export function AiCoach() {
           )}
 
           {/* Toggle Chat Button */}
-          <div className="p-4 border-t dark:border-gray-700">
+          <div className="p-4 border-t border-green-800">
             <button
               onClick={() => setShowChat(!showChat)}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-500 dark:hover:bg-blue-600"
+              className="w-full px-4 py-2 bg-primary text-black rounded-lg hover:bg-primary/90 transition-colors"
             >
               {showChat ? 'View Recommendations' : 'Chat with AI Coach'}
             </button>

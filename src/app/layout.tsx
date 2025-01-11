@@ -34,7 +34,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ClientProviders>
           <WalletHandler />
-          <Toaster />
+          <Toaster
+            position="bottom-right"
+          />
           {children}
         </ClientProviders>
         <Analytics />

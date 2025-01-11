@@ -255,14 +255,14 @@ export default function DashboardPage() {
   };
 
   const renderLoadingCard = () => (
-    <div className="flex items-center justify-center p-6 bg-white dark:bg-gray-800 rounded-xl">
-      <Loader2 className="w-6 h-6 animate-spin text-blue-600 dark:text-blue-400" />
+    <div className="flex items-center justify-center p-6 bg-black rounded-xl border border-green-800">
+      <Loader2 className="w-6 h-6 animate-spin text-primary" />
     </div>
   );
 
   const renderErrorCard = (message: string) => (
-    <div className="p-6 bg-white dark:bg-gray-800 rounded-xl">
-      <p className="text-red-500 dark:text-red-400 text-center">{message}</p>
+    <div className="p-6 bg-black rounded-xl border border-green-800">
+      <p className="text-red-400 text-center">{message}</p>
     </div>
   );
 
@@ -272,20 +272,20 @@ export default function DashboardPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-blue-600 to-blue-400 rounded-xl p-6 text-white"
+        className="bg-gradient-to-r from-black to-green-900 rounded-xl p-6 text-white border border-green-800"
       >
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold mb-2">Welcome Back!</h2>
-            <p className="text-blue-100">Track your progress and earn rewards daily</p>
+            <p className="text-gray-400">Track your progress and earn rewards daily</p>
           </div>
           <button
             onClick={handleDailyCheckIn}
             disabled={hasCheckedIn}
             className={`px-6 py-3 rounded-lg transition-colors ${
               hasCheckedIn
-                ? 'bg-blue-300 cursor-not-allowed'
-                : 'bg-white text-blue-600 hover:bg-blue-50'
+                ? 'bg-primary/50 cursor-not-allowed'
+                : 'bg-primary hover:bg-primary/90 text-black'
             }`}
           >
             {hasCheckedIn ? 'Checked In ✓' : 'Daily Check-in'}
@@ -300,7 +300,7 @@ export default function DashboardPage() {
 
       {/* Health Metrics Grid */}
       <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-4 dark:text-white">Health Metrics</h2>
+        <h2 className="text-xl font-semibold mb-4 text-white">Health Metrics</h2>
         {isLoadingHealth ? (
           renderLoadingCard()
         ) : healthError ? (
@@ -311,15 +311,15 @@ export default function DashboardPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm"
+              className="bg-black p-4 rounded-xl shadow-sm border border-green-800"
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg">
-                  <Heart className="w-5 h-5 text-red-600 dark:text-red-400" />
+                <div className="p-2 bg-primary/20 rounded-lg">
+                  <Heart className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Heart Rate</p>
-                  <p className="text-xl font-bold dark:text-white">
+                  <p className="text-sm text-gray-400">Heart Rate</p>
+                  <p className="text-xl font-bold text-white">
                     {healthMetrics.heartRate.current} {healthMetrics.heartRate.unit}
                   </p>
                 </div>
@@ -331,15 +331,15 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm"
+              className="bg-black p-4 rounded-xl shadow-sm border border-green-800"
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                  <Moon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                <div className="p-2 bg-primary/20 rounded-lg">
+                  <Moon className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Sleep</p>
-                  <p className="text-xl font-bold dark:text-white">
+                  <p className="text-sm text-gray-400">Sleep</p>
+                  <p className="text-xl font-bold text-white">
                     {healthMetrics.sleepHours.current} {healthMetrics.sleepHours.unit}
                   </p>
                 </div>
@@ -351,15 +351,15 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm"
+              className="bg-black p-4 rounded-xl shadow-sm border border-green-800"
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                  <Footprints className="w-5 h-5 text-green-600 dark:text-green-400" />
+                <div className="p-2 bg-primary/20 rounded-lg">
+                  <Footprints className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Steps</p>
-                  <p className="text-xl font-bold dark:text-white">
+                  <p className="text-sm text-gray-400">Steps</p>
+                  <p className="text-xl font-bold text-white">
                     {healthMetrics.steps.current.toLocaleString()} {healthMetrics.steps.unit}
                   </p>
                 </div>
@@ -371,15 +371,15 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm"
+              className="bg-black p-4 rounded-xl shadow-sm border border-green-800"
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                  <Brain className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                <div className="p-2 bg-primary/20 rounded-lg">
+                  <Brain className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Mindfulness</p>
-                  <p className="text-xl font-bold dark:text-white">
+                  <p className="text-sm text-gray-400">Mindfulness</p>
+                  <p className="text-xl font-bold text-white">
                     {healthMetrics.mindfulness.current} {healthMetrics.mindfulness.unit}
                   </p>
                 </div>
@@ -397,49 +397,49 @@ export default function DashboardPage() {
         ) : progressError ? (
           renderErrorCard(progressError)
         ) : (
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
-            <h2 className="text-xl font-semibold mb-4 dark:text-white">Weekly Progress</h2>
+          <div className="bg-black rounded-xl shadow-sm p-6 border border-green-800">
+            <h2 className="text-xl font-semibold mb-4 text-white">Weekly Progress</h2>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                    <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Tasks Completed</p>
-                    <p className="font-semibold dark:text-white">{weeklyProgress.tasksCompleted}</p>
+                    <p className="text-sm text-gray-400">Tasks Completed</p>
+                    <p className="font-semibold text-white">{weeklyProgress.tasksCompleted}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                    <TrendingUp className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <TrendingUp className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Goals Advanced</p>
-                    <p className="font-semibold dark:text-white">{weeklyProgress.goalsAdvanced}</p>
+                    <p className="text-sm text-gray-400">Goals Advanced</p>
+                    <p className="font-semibold text-white">{weeklyProgress.goalsAdvanced}</p>
                   </div>
                 </div>
               </div>
 
-              <div className="h-px bg-gray-200 dark:bg-gray-700" />
+              <div className="h-px bg-green-800" />
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                    <Activity className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <Activity className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Streak Days</p>
-                    <p className="font-semibold dark:text-white">{weeklyProgress.streakDays} days</p>
+                    <p className="text-sm text-gray-400">Streak Days</p>
+                    <p className="font-semibold text-white">{weeklyProgress.streakDays} days</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
-                    <Calendar className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <Calendar className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Total Points</p>
-                    <p className="font-semibold dark:text-white">{weeklyProgress.totalPoints}</p>
+                    <p className="text-sm text-gray-400">Total Points</p>
+                    <p className="font-semibold text-white">{weeklyProgress.totalPoints}</p>
                   </div>
                 </div>
               </div>
@@ -453,12 +453,12 @@ export default function DashboardPage() {
         ) : communityError ? (
           renderErrorCard(communityError)
         ) : (
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+          <div className="bg-black rounded-xl shadow-sm p-6 border border-green-800">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold dark:text-white">Community</h2>
+              <h2 className="text-xl font-semibold text-white">Community</h2>
               <a 
                 href="/dashboard/community"
-                className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+                className="text-sm text-primary hover:text-primary/60"
               >
                 View All
               </a>
@@ -467,40 +467,40 @@ export default function DashboardPage() {
               {communityHighlights.map((highlight) => (
                 <div
                   key={highlight.id}
-                  className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50"
+                  className="flex items-start gap-3 p-3 rounded-lg bg-green-900/20 border border-green-800"
                 >
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                    <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <Users className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-medium dark:text-white">{highlight.title}</h3>
+                    <h3 className="font-medium text-white">{highlight.title}</h3>
                     {highlight.type === 'challenge' && highlight.progress !== undefined && (
                       <div className="mt-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+                          <div className="flex-1 h-2 bg-black rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-blue-600 dark:bg-blue-400 rounded-full"
+                              className="h-full bg-primary rounded-full"
                               style={{ width: `${highlight.progress}%` }}
                             />
                           </div>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                          <span className="text-sm text-gray-400">
                             {highlight.progress}%
                           </span>
                         </div>
                         {highlight.participants && (
-                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                          <p className="text-sm text-gray-400">
                             {highlight.participants} participants
                           </p>
                         )}
                       </div>
                     )}
                     {highlight.type === 'milestone' && highlight.description && (
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-gray-400">
                         {highlight.description}
                       </p>
                     )}
                     {highlight.type === 'leaderboard' && highlight.user && highlight.achievement && (
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-gray-400">
                         {highlight.user} - {highlight.achievement}
                       </p>
                     )}

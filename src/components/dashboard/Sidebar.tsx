@@ -77,26 +77,28 @@ export function Sidebar() {
       <div className="lg:hidden fixed top-4 left-4 z-50">
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="p-2 rounded-lg bg-white dark:bg-gray-800 shadow-md"
+          className="p-2 rounded-lg bg-black border border-green-800 shadow-md"
         >
           {isMobileMenuOpen ? (
-            <X className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+            <X className="w-6 h-6 text-green-400" />
           ) : (
-            <Menu className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+            <Menu className="w-6 h-6 text-green-400" />
           )}
         </button>
       </div>
 
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-gray-800 transform transition-transform duration-200 ease-in-out lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 w-64 bg-black border-r border-green-800 transform transition-transform duration-200 ease-in-out lg:translate-x-0 ${
           isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="h-full flex flex-col">
           <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-            <div className="flex-shrink-0 flex items-center px-4">
-              <Logo />
+            <div className="flex-shrink-0 flex items-center justify-center px-4">
+              <div className="scale-125">
+                <Logo />
+              </div>
             </div>
             <nav className="mt-8 flex-1 px-2 space-y-1">
               {navigationItems.map((item) => {
@@ -107,16 +109,16 @@ export function Sidebar() {
                     href={item.href}
                     className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors ${
                       isActive
-                        ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'
-                        : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                        ? 'bg-primary/20 text-green-400'
+                        : 'text-white hover:bg-primary/10 hover:text-primary'
                     }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <item.icon
                       className={`mr-3 h-5 w-5 transition-colors ${
                         isActive
-                          ? 'text-blue-600 dark:text-blue-400'
-                          : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-300'
+                          ? 'text-green-400'
+                          : 'text-white group-hover:text-primary'
                       }`}
                     />
                     {item.name}
@@ -125,10 +127,8 @@ export function Sidebar() {
               })}
             </nav>
           </div>
-          <div className="flex-shrink-0 flex border-t border-gray-200 dark:border-gray-700 p-4">
-            <ThemeToggle />
-            <br />
-            <p className="text-xs text-gray-500 dark:text-gray-400">Made With ❤ By the Thraive Team</p>
+          <div className="flex-shrink-0 flex border-t border-green-800 p-4">
+            <p className="w-full text-center text-xs text-white">Made With <p className="inline-block text-green-400">❤</p> By the Thraive Team</p>
           </div>
         </div>
       </div>

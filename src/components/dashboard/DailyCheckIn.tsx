@@ -63,9 +63,9 @@ export function DailyCheckIn({ onComplete }: DailyCheckInProps) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
+    <div className="bg-black rounded-xl shadow-sm overflow-hidden">
       {/* Progress Steps */}
-      <div className="p-4 border-b dark:border-gray-700">
+      <div className="p-4 border-b border-green-800">
         <div className="flex justify-between">
           {[1, 2, 3].map((stepNumber) => (
             <div
@@ -74,16 +74,16 @@ export function DailyCheckIn({ onComplete }: DailyCheckInProps) {
             >
               <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                 step >= stepNumber
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-400'
+                  ? 'bg-primary text-black'
+                  : 'bg-black border border-green-800 text-gray-400'
               }`}>
                 {stepNumber}
               </div>
               {stepNumber < 3 && (
                 <div className={`w-full h-1 ${
                   step > stepNumber
-                    ? 'bg-blue-600'
-                    : 'bg-gray-100 dark:bg-gray-700'
+                    ? 'bg-primary'
+                    : 'bg-green-800'
                 }`} />
               )}
             </div>
@@ -101,22 +101,22 @@ export function DailyCheckIn({ onComplete }: DailyCheckInProps) {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-4"
             >
-              <h2 className="text-xl font-semibold dark:text-white">How are you feeling today?</h2>
+              <h2 className="text-xl font-semibold text-white">How are you feeling today?</h2>
               <div className="grid grid-cols-3 gap-4">
                 {[
-                  { mood: 'great', icon: Smile, label: 'Great', color: 'text-green-600 dark:text-green-400' },
-                  { mood: 'okay', icon: Meh, label: 'Okay', color: 'text-yellow-600 dark:text-yellow-400' },
-                  { mood: 'bad', icon: Frown, label: 'Bad', color: 'text-red-600 dark:text-red-400' }
+                  { mood: 'great', icon: Smile, label: 'Great', color: 'text-green-400' },
+                  { mood: 'okay', icon: Meh, label: 'Okay', color: 'text-yellow-400' },
+                  { mood: 'bad', icon: Frown, label: 'Bad', color: 'text-red-400' }
                 ].map((option) => (
                   <button
                     key={option.mood}
                     onClick={() => handleMoodSelect(option.mood as CheckInData['mood'])}
-                    className={`p-4 rounded-lg border-2 border-transparent hover:border-blue-600 dark:hover:border-blue-400 transition-colors ${
-                      checkInData.mood === option.mood ? 'border-blue-600 dark:border-blue-400' : ''
+                    className={`p-4 rounded-lg border-2 border-transparent hover:border-primary transition-colors ${
+                      checkInData.mood === option.mood ? 'border-primary bg-primary/10' : ''
                     }`}
                   >
                     <option.icon className={`w-12 h-12 mx-auto mb-2 ${option.color}`} />
-                    <span className="block text-sm font-medium dark:text-white">{option.label}</span>
+                    <span className="block text-sm font-medium text-white">{option.label}</span>
                   </button>
                 ))}
               </div>
@@ -130,22 +130,22 @@ export function DailyCheckIn({ onComplete }: DailyCheckInProps) {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-4"
             >
-              <h2 className="text-xl font-semibold dark:text-white">How's your energy level?</h2>
+              <h2 className="text-xl font-semibold text-white">How's your energy level?</h2>
               <div className="grid grid-cols-3 gap-4">
                 {[
-                  { level: 'high', icon: Zap, label: 'High', color: 'text-yellow-600 dark:text-yellow-400' },
-                  { level: 'medium', icon: Battery, label: 'Medium', color: 'text-blue-600 dark:text-blue-400' },
-                  { level: 'low', icon: Battery, label: 'Low', color: 'text-red-600 dark:text-red-400' }
+                  { level: 'high', icon: Zap, label: 'High', color: 'text-yellow-400' },
+                  { level: 'medium', icon: Battery, label: 'Medium', color: 'text-primary' },
+                  { level: 'low', icon: Battery, label: 'Low', color: 'text-red-400' }
                 ].map((option) => (
                   <button
                     key={option.level}
                     onClick={() => handleEnergySelect(option.level as CheckInData['energy'])}
-                    className={`p-4 rounded-lg border-2 border-transparent hover:border-blue-600 dark:hover:border-blue-400 transition-colors ${
-                      checkInData.energy === option.level ? 'border-blue-600 dark:border-blue-400' : ''
+                    className={`p-4 rounded-lg border-2 border-transparent hover:border-primary transition-colors ${
+                      checkInData.energy === option.level ? 'border-primary bg-primary/10' : ''
                     }`}
                   >
                     <option.icon className={`w-12 h-12 mx-auto mb-2 ${option.color}`} />
-                    <span className="block text-sm font-medium dark:text-white">{option.label}</span>
+                    <span className="block text-sm font-medium text-white">{option.label}</span>
                   </button>
                 ))}
               </div>
@@ -159,22 +159,22 @@ export function DailyCheckIn({ onComplete }: DailyCheckInProps) {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-4"
             >
-              <h2 className="text-xl font-semibold dark:text-white">How did you sleep?</h2>
+              <h2 className="text-xl font-semibold text-white">How did you sleep?</h2>
               <div className="grid grid-cols-3 gap-4">
                 {[
-                  { quality: 'good', icon: Moon, label: 'Good', color: 'text-green-600 dark:text-green-400' },
-                  { quality: 'fair', icon: Moon, label: 'Fair', color: 'text-yellow-600 dark:text-yellow-400' },
-                  { quality: 'poor', icon: Moon, label: 'Poor', color: 'text-red-600 dark:text-red-400' }
+                  { quality: 'good', icon: Moon, label: 'Good', color: 'text-green-400' },
+                  { quality: 'fair', icon: Moon, label: 'Fair', color: 'text-yellow-400' },
+                  { quality: 'poor', icon: Moon, label: 'Poor', color: 'text-red-400' }
                 ].map((option) => (
                   <button
                     key={option.quality}
                     onClick={() => handleSleepSelect(option.quality as CheckInData['sleep'])}
-                    className={`p-4 rounded-lg border-2 border-transparent hover:border-blue-600 dark:hover:border-blue-400 transition-colors ${
-                      checkInData.sleep === option.quality ? 'border-blue-600 dark:border-blue-400' : ''
+                    className={`p-4 rounded-lg border-2 border-transparent hover:border-primary transition-colors ${
+                      checkInData.sleep === option.quality ? 'border-primary bg-primary/10' : ''
                     }`}
                   >
                     <option.icon className={`w-12 h-12 mx-auto mb-2 ${option.color}`} />
-                    <span className="block text-sm font-medium dark:text-white">{option.label}</span>
+                    <span className="block text-sm font-medium text-white">{option.label}</span>
                   </button>
                 ))}
               </div>
