@@ -63,12 +63,12 @@ export function StakingModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-black border border-green-800">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="text-white">
             {mode === 'stake' ? 'Stake THRAIVE Tokens' : 'Unstake THRAIVE Tokens'}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-gray-400">
             {mode === 'stake'
               ? 'Stake your tokens to earn rewards and unlock benefits'
               : 'Unstake your tokens to access them again'}
@@ -80,7 +80,11 @@ export function StakingModal({
             <Button
               variant={mode === 'stake' ? 'default' : 'outline'}
               onClick={() => setMode('stake')}
-              className="flex items-center gap-2"
+              className={`flex items-center gap-2 ${
+                mode === 'stake' 
+                  ? 'bg-primary hover:bg-primary/90 text-black'
+                  : 'bg-black hover:bg-primary/20 text-white border border-green-800'
+              }`}
             >
               <Lock className="w-4 h-4" />
               Stake
@@ -88,7 +92,11 @@ export function StakingModal({
             <Button
               variant={mode === 'unstake' ? 'default' : 'outline'}
               onClick={() => setMode('unstake')}
-              className="flex items-center gap-2"
+              className={`flex items-center gap-2 ${
+                mode === 'unstake' 
+                  ? 'bg-primary hover:bg-primary/90 text-black'
+                  : 'bg-black hover:bg-primary/20 text-white border border-green-800'
+              }`}
             >
               <Unlock className="w-4 h-4" />
               Unstake
@@ -97,7 +105,7 @@ export function StakingModal({
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">
+              <label className="text-sm font-medium text-gray-300">
                 Amount
               </label>
               <div className="relative">
@@ -108,28 +116,28 @@ export function StakingModal({
                   placeholder="Enter amount"
                   min="0"
                   max={maxAmount}
-                  className="pr-20"
+                  className="pr-20 bg-black border-green-800 text-white focus:ring-primary focus:border-primary"
                 />
                 <Button
                   type="button"
                   variant="ghost"
                   size="sm"
                   onClick={handleMaxClick}
-                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary hover:bg-primary/20"
                 >
                   Max
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-400">
                 Available: {maxAmount} THRAIVE
               </p>
             </div>
 
             {mode === 'stake' && selectedTier && (
               <div className="space-y-2">
-                <h4 className="font-medium">Selected Tier: {selectedTier.name}</h4>
-                <div className="text-sm space-y-1">
-                  <p>APY: {selectedTier.apy}%</p>
+                <h4 className="font-medium text-white">Selected Tier: {selectedTier.name}</h4>
+                <div className="text-sm space-y-1 text-gray-400">
+                  <p>APY: <span className="text-primary">{selectedTier.apy}%</span></p>
                   <p>Lock Period: {selectedTier.lockPeriod} days</p>
                 </div>
               </div>
@@ -138,7 +146,7 @@ export function StakingModal({
             <Button
               type="submit"
               disabled={!isValidAmount || isSubmitting}
-              className="w-full"
+              className="w-full bg-primary hover:bg-primary/90 text-black"
             >
               {isSubmitting ? (
                 'Processing...'

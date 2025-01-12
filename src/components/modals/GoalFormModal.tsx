@@ -63,43 +63,43 @@ export function GoalFormModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="relative w-full max-w-lg p-6 bg-white dark:bg-gray-800 rounded-xl shadow-xl"
+        className="relative w-full max-w-lg p-6 bg-black rounded-xl shadow-xl border border-green-800"
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+          className="absolute top-4 right-4 p-2 rounded-lg text-gray-400 hover:bg-primary/20"
         >
-          <X className="w-5 h-5 dark:text-gray-400" />
+          <X className="w-5 h-5" />
         </button>
 
-        <h2 className="text-xl font-bold mb-4 dark:text-white">
+        <h2 className="text-xl font-bold mb-4 text-white">
           {mode === 'create' ? 'Create New Goal' : 'Edit Goal'}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Title */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Title
             </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-green-800 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-primary"
               required
             />
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Description
             </label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-green-800 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-primary resize-none max-h-[100px]"
               rows={3}
               required
             />
@@ -107,13 +107,13 @@ export function GoalFormModal({
 
           {/* Category */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Category
             </label>
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value as GoalCategory })}
-              className="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-green-800 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-primary"
               required
             >
               <option value="Wellness">Wellness</option>
@@ -127,7 +127,7 @@ export function GoalFormModal({
 
           {/* Due Date */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Due Date
             </label>
             <div className="relative">
@@ -135,7 +135,7 @@ export function GoalFormModal({
                 type="date"
                 value={formData.dueDate}
                 onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-green-800 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-primary"
                 required
                 min={new Date().toISOString().split('T')[0]}
               />
@@ -145,20 +145,20 @@ export function GoalFormModal({
 
           {/* Milestones */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Milestones
             </label>
             <div className="space-y-2">
               {formData.milestones.map((milestone, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 dark:bg-gray-700/50"
+                  className="flex items-center gap-2 p-2 rounded-lg bg-primary/20 border border-green-800"
                 >
-                  <span className="flex-1 text-sm text-gray-700 dark:text-gray-300">{milestone}</span>
+                  <span className="flex-1 text-sm text-gray-300">{milestone}</span>
                   <button
                     type="button"
                     onClick={() => removeMilestone(index)}
-                    className="p-1 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded"
+                    className="p-1 text-black hover:bg-green-900/20 rounded"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -170,7 +170,7 @@ export function GoalFormModal({
                   value={newMilestone}
                   onChange={(e) => setNewMilestone(e.target.value)}
                   placeholder="Add a milestone..."
-                  className="flex-1 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 px-4 py-2 border border-green-800 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-primary"
                   onKeyPress={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();
@@ -181,7 +181,7 @@ export function GoalFormModal({
                 <button
                   type="button"
                   onClick={addMilestone}
-                  className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600"
+                  className="px-4 py-2 bg-primary/20 text-white rounded-lg hover:bg-primary/30 border border-green-800"
                 >
                   Add
                 </button>
@@ -194,13 +194,13 @@ export function GoalFormModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+              className="px-4 py-2 text-gray-300 hover:bg-primary/20 rounded-lg"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600"
+              className="px-4 py-2 bg-primary hover:bg-primary/90 text-black rounded-lg font-semibold"
             >
               {mode === 'create' ? 'Create Goal' : 'Save Changes'}
             </button>

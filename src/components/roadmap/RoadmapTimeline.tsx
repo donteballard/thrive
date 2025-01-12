@@ -110,7 +110,7 @@ export function RoadmapTimeline({ variant = 'landing' }: RoadmapTimelineProps) {
       blockchain: Wallet
     };
     const Icon = icons[category];
-    return <Icon className="w-5 h-5" />;
+    return <Icon className="w-5 h-5 text-primary" />;
   };
 
   const getStatusColor = (status: RoadmapItem['status']) => {
@@ -127,15 +127,15 @@ export function RoadmapTimeline({ variant = 'landing' }: RoadmapTimelineProps) {
   return (
     <div className="w-full max-w-7xl mx-auto">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-4 dark:text-white">Development Roadmap</h2>
-        <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <h2 className="text-3xl font-bold mb-4 text-white">Development Roadmap</h2>
+        <p className="text-gray-400 max-w-2xl mx-auto">
           Track our progress and see what's coming next. We're constantly working to bring you new features and improvements.
         </p>
       </div>
 
       <div className="relative">
         {/* Timeline Line */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-200 dark:bg-gray-700" />
+        <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-green-800" />
 
         {/* Timeline Items */}
         <div className="space-y-20">
@@ -150,29 +150,29 @@ export function RoadmapTimeline({ variant = 'landing' }: RoadmapTimelineProps) {
               }`}
             >
               {/* Timeline Point */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-white dark:bg-gray-800 border-4 border-primary" />
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-black border-4 border-primary" />
 
               {/* Content Card */}
               <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-xl shadow-sm p-6">
+                <div className="bg-black rounded-xl shadow-sm p-6 border border-green-800">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <div className={`p-2 rounded-lg ${
-                        item.status === 'completed' ? 'bg-primary/10 dark:bg-primary/20' :
-                        item.status === 'in-progress' ? 'bg-primary/5 dark:bg-primary/10' :
-                        'bg-gray-100 dark:bg-gray-700'
+                        item.status === 'completed' ? 'bg-primary/20' :
+                        item.status === 'in-progress' ? 'bg-primary/10' :
+                        'bg-gray-800'
                       }`}>
                         {getCategoryIcon(item.category)}
                       </div>
                       <div>
-                        <h3 className="font-semibold dark:text-white">{item.title}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{item.date}</p>
+                        <h3 className="font-semibold text-white">{item.title}</h3>
+                        <p className="text-sm text-gray-400">{item.date}</p>
                       </div>
                     </div>
                     {getStatusIcon(item.status)}
                   </div>
 
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
+                  <p className="text-gray-400 mb-4">
                     {item.description}
                   </p>
 
@@ -183,20 +183,20 @@ export function RoadmapTimeline({ variant = 'landing' }: RoadmapTimelineProps) {
                         className="flex items-center gap-2 text-sm"
                       >
                         <div className={`w-1.5 h-1.5 rounded-full ${getStatusColor(item.status)}`} />
-                        <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+                        <span className="text-gray-300">{feature}</span>
                       </div>
                     ))}
                   </div>
 
                   {item.status === 'in-progress' && (
-                    <div className="mt-4 pt-4 border-t dark:border-gray-700">
+                    <div className="mt-4 pt-4 border-t border-green-800">
                       <div className="flex items-center justify-between text-sm mb-1">
-                        <span className="text-gray-600 dark:text-gray-400">Progress</span>
-                        <span className="font-medium text-primary dark:text-primary">60%</span>
+                        <span className="text-gray-400">Progress</span>
+                        <span className="font-medium text-primary">60%</span>
                       </div>
-                      <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-2 bg-black rounded-full overflow-hidden border border-green-800">
                         <div
-                          className="h-full bg-primary dark:bg-primary rounded-full transition-all duration-500"
+                          className="h-full bg-primary rounded-full transition-all duration-500"
                           style={{ width: '60%' }}
                         />
                       </div>
@@ -209,19 +209,19 @@ export function RoadmapTimeline({ variant = 'landing' }: RoadmapTimelineProps) {
         </div>
       </div>
 
-      {/* Legend */}
-      <div className="mt-12 flex justify-center gap-6">
-        {[
-          { status: 'completed', label: 'Completed' },
-          { status: 'in-progress', label: 'In Progress' },
-          { status: 'upcoming', label: 'Upcoming' }
-        ].map((item) => (
-          <div key={item.status} className="flex items-center gap-2">
-            {getStatusIcon(item.status as RoadmapItem['status'])}
-            <span className="text-sm text-gray-600 dark:text-gray-400">{item.label}</span>
-          </div>
-        ))}
-      </div>
+        {/* Legend */}
+        <div className="mt-12 flex justify-center gap-6">
+          {[
+            { status: 'completed', label: 'Completed' },
+            { status: 'in-progress', label: 'In Progress' },
+            { status: 'upcoming', label: 'Upcoming' }
+          ].map((item) => (
+            <div key={item.status} className="flex items-center gap-2">
+              {getStatusIcon(item.status as RoadmapItem['status'])}
+              <span className="text-sm text-gray-400">{item.label}</span>
+            </div>
+          ))}
+        </div>
     </div>
   );
 } 

@@ -118,48 +118,55 @@ export function HealthMetrics() {
   const [selectedMetric, setSelectedMetric] = useState<keyof HealthMetrics>('heartRate');
   const [timeRange, setTimeRange] = useState<'week' | 'month'>('week');
 
-  const getMetricIcon = (metricKey: keyof HealthMetrics) => {
-    const icons = {
-      heartRate: Heart,
-      sleepHours: Moon,
-      steps: Footprints,
-      mindfulness: Brain,
-      caloriesBurned: Activity,
-      waterIntake: Apple,
-      exerciseMinutes: Dumbbell
-    };
-    const IconComponent = icons[metricKey];
-    return <IconComponent className="w-5 h-5" />;
+  const getMetricIcon = (metric: keyof HealthMetrics) => {
+    const iconProps = { className: 'w-5 h-5 text-primary' };
+    switch (metric) {
+      case 'heartRate':
+        return <Heart {...iconProps} />;
+      case 'sleepHours':
+        return <Moon {...iconProps} />;
+      case 'steps':
+        return <Footprints {...iconProps} />;
+      case 'mindfulness':
+        return <Brain {...iconProps} />;
+      case 'caloriesBurned':
+        return <Activity {...iconProps} />;
+      case 'waterIntake':
+        return <Apple {...iconProps} />;
+      case 'exerciseMinutes':
+        return <Dumbbell {...iconProps} />;
+      default:
+        return null;
+    }
   };
 
   const getMetricColor = (metric: MetricData) => {
-    const percentage = (metric.current / (metric.goal || metric.current)) * 100;
-    return percentage >= 100 ? 'text-green-600 dark:text-green-400' :
-           percentage >= 75 ? 'text-blue-600 dark:text-blue-400' :
-           'text-yellow-600 dark:text-yellow-400';
+    if (metric.trend === 'up') return 'text-white';
+    if (metric.trend === 'down') return 'text-white';
+    return 'text-white';
   };
 
   return (
     <div className="space-y-6">
       {/* Time Range Selector */}
       <div className="flex justify-end">
-        <div className="inline-flex rounded-lg overflow-hidden">
+        <div className="inline-flex rounded-lg overflow-hidden border border-green-800">
           <button
             onClick={() => setTimeRange('week')}
-            className={`px-4 py-2 text-sm font-medium ${
+            className={`px-4 py-2 text-sm font-medium transition-colors ${
               timeRange === 'week'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                ? 'bg-primary text-black'
+                : 'bg-black text-gray-400 hover:bg-primary/20 hover:text-white'
             }`}
           >
             Week
           </button>
           <button
             onClick={() => setTimeRange('month')}
-            className={`px-4 py-2 text-sm font-medium ${
+            className={`px-4 py-2 text-sm font-medium transition-colors ${
               timeRange === 'month'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                ? 'bg-primary text-black'
+                : 'bg-black text-gray-400 hover:bg-primary/20 hover:text-white'
             }`}
           >
             Month
@@ -176,30 +183,30 @@ export function HealthMetrics() {
               key={key}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`p-4 rounded-xl shadow-sm cursor-pointer transition-colors ${
+              className={`p-4 rounded-xl cursor-pointer transition-colors ${
                 selectedMetric === key
-                  ? 'bg-blue-50 dark:bg-blue-900/30 border-2 border-blue-600 dark:border-blue-400'
-                  : 'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? 'bg-black border-2 border-primary'
+                  : 'bg-black border border-green-800 hover:border-primary'
               }`}
               onClick={() => setSelectedMetric(key)}
             >
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded-lg ${
                   selectedMetric === key
-                    ? 'bg-blue-100 dark:bg-blue-900/50'
-                    : 'bg-gray-100 dark:bg-gray-700'
+                    ? 'bg-primary/20'
+                    : 'bg-primary/10'
                 }`}>
                   {getMetricIcon(key)}
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  <h3 className="text-sm font-medium text-gray-400">
                     {key.replace(/([A-Z])/g, ' $1').trim()}
                   </h3>
                   <div className="flex items-center gap-2">
                     <p className={`text-xl font-bold ${getMetricColor(metric)}`}>
                       {metric.current}
                     </p>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                    <span className="text-sm text-gray-400">
                       {metric.unit}
                     </span>
                   </div>
@@ -214,16 +221,16 @@ export function HealthMetrics() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6"
+        className="bg-black border border-green-800 rounded-xl p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold dark:text-white">
+          <h3 className="text-lg font-semibold text-white">
             {selectedMetric.replace(/([A-Z])/g, ' $1').trim()} Trends
           </h3>
           <div className="flex items-center gap-2">
             <Calendar className="w-5 h-5 text-gray-400" />
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              Last {timeRange}
+            <span className="text-sm text-gray-400">
+              Last {timeRange === 'week' ? '7 Days' : '30 Days'}
             </span>
           </div>
         </div>
@@ -234,7 +241,7 @@ export function HealthMetrics() {
               data={mockHealthData[selectedMetric].history}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" />
               <XAxis
                 dataKey="date"
                 stroke="#6B7280"
@@ -243,8 +250,8 @@ export function HealthMetrics() {
               <YAxis stroke="#6B7280" tick={{ fill: '#6B7280' }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1F2937',
-                  border: 'none',
+                  backgroundColor: '#000000',
+                  border: '1px solid #22C55E',
                   borderRadius: '0.5rem',
                   color: '#F3F4F6'
                 }}
@@ -252,9 +259,9 @@ export function HealthMetrics() {
               <Line
                 type="monotone"
                 dataKey="value"
-                stroke="#3B82F6"
+                stroke="#22C55E"
                 strokeWidth={2}
-                dot={{ fill: '#3B82F6', strokeWidth: 2 }}
+                dot={{ fill: '#22C55E', strokeWidth: 2 }}
                 activeDot={{ r: 8 }}
               />
             </LineChart>
@@ -265,16 +272,16 @@ export function HealthMetrics() {
         {mockHealthData[selectedMetric].goal && (
           <div className="mt-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <span className="text-sm font-medium text-gray-400">
                 Goal Progress
               </span>
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <span className="text-sm font-medium text-gray-400">
                 {Math.round((mockHealthData[selectedMetric].current / mockHealthData[selectedMetric].goal!) * 100)}%
               </span>
             </div>
-            <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div className="h-2 bg-black border border-green-800 rounded-full overflow-hidden">
               <div
-                className="h-full bg-blue-600 dark:bg-blue-400 rounded-full transition-all duration-500"
+                className="h-full bg-primary rounded-full transition-all duration-500"
                 style={{
                   width: `${Math.min(100, (mockHealthData[selectedMetric].current / mockHealthData[selectedMetric].goal!) * 100)}%`
                 }}

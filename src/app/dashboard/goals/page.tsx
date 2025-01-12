@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Plus, Search, Filter, MoreVertical, ChevronDown, Trash2, Edit2, CheckCircle2, Bell, BellOff, X, Share2, Loader2, Heart, BookOpen, DollarSign, Briefcase, Activity, User, Layout } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -44,6 +44,12 @@ export default function GoalsPage() {
   const [selectedCategory, setSelectedCategory] = useState<GoalCategory | 'All'>('All');
   const [showActionMenu, setShowActionMenu] = useState<number | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<GoalStatus | 'All'>('All');
+  const actionMenuRef = useRef<HTMLDivElement>(null);
+  const actionButtonRef = useRef<HTMLButtonElement>(null);
+  const filterMenuRef = useRef<HTMLDivElement>(null);
+  const filterButtonRef = useRef<HTMLButtonElement>(null);
+  const notificationMenuRef = useRef<HTMLDivElement>(null);
+  const notificationButtonRef = useRef<HTMLButtonElement>(null);
 
   const categories: { name: GoalCategory; icon: React.ReactNode }[] = [
     { name: 'Wellness', icon: <Heart className="w-4 h-4" /> },
@@ -72,6 +78,51 @@ export default function GoalsPage() {
       status: selectedStatus === 'All' ? undefined : selectedStatus,
     }));
   }, [selectedStatus, setFilters]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (showActionMenu !== null &&
+          actionMenuRef.current &&
+          actionButtonRef.current &&
+          !actionMenuRef.current.contains(event.target as Node) &&
+          !actionButtonRef.current.contains(event.target as Node)) {
+        setShowActionMenu(null);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showActionMenu]);
+
+  // Click outside handler for notifications and filter menu
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      // Handle notifications menu
+      if (showNotificationSettings &&
+          notificationMenuRef.current &&
+          notificationButtonRef.current &&
+          !notificationMenuRef.current.contains(event.target as Node) &&
+          !notificationButtonRef.current.contains(event.target as Node)) {
+        setShowNotificationSettings(false);
+      }
+
+      // Handle filter menu
+      if (showFilterMenu &&
+          filterMenuRef.current &&
+          filterButtonRef.current &&
+          !filterMenuRef.current.contains(event.target as Node) &&
+          !filterButtonRef.current.contains(event.target as Node)) {
+        setShowFilterMenu(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showNotificationSettings, showFilterMenu]);
 
   const handleCreateGoal = async (data: GoalFormData) => {
     try {
@@ -198,6 +249,7 @@ export default function GoalsPage() {
         }}
         onConfirm={handleDeleteGoal}
         title={selectedGoal?.title || ''}
+        message={`Are you sure you want to delete "${selectedGoal?.title}"? This action cannot be undone.`}
       />
 
       {/* Progress Update Modal */}
@@ -230,20 +282,20 @@ export default function GoalsPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold">Goals</h1>
-          <p className="text-muted-foreground">Track and manage your personal goals</p>
+          <h1 className="text-2xl font-bold text-white">Goals</h1>
+          <p className="text-gray-400">Track and manage your personal goals</p>
           {stats && (
             <div className="flex gap-4 mt-2 text-sm">
-              <span className="text-muted-foreground">
+              <span className="text-gray-400">
                 Total: {stats.total}
               </span>
-              <span className="text-emerald-600 dark:text-emerald-400">
+              <span className="text-primary">
                 Completed: {stats.completed}
               </span>
               <span className="text-primary">
                 In Progress: {stats.inProgress}
               </span>
-              <span className="text-muted-foreground">
+              <span className="text-gray-400">
                 Not Started: {stats.notStarted}
               </span>
             </div>
@@ -253,35 +305,72 @@ export default function GoalsPage() {
         <div className="flex items-center gap-4">
           <div className="relative">
             <Button
+              ref={notificationButtonRef}
               variant="outline"
               size="sm"
-              className="relative"
+              className="relative bg-black border-green-800 hover:bg-primary/20"
               onClick={() => setShowNotificationSettings(!showNotificationSettings)}
             >
               {notificationsEnabled ? (
                 <Bell className="w-4 h-4 text-primary" />
               ) : (
-                <BellOff className="w-4 h-4 text-muted-foreground" />
+                <BellOff className="w-4 h-4 text-gray-400" />
               )}
             </Button>
+
+            {showNotificationSettings && (
+              <div
+                ref={notificationMenuRef}
+                className="absolute right-0 top-[calc(100%+0.5rem)] w-64 bg-black border border-green-800 rounded-xl shadow-lg z-50 p-4"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-sm font-medium text-white">Notifications</h3>
+                  <button
+                    onClick={() => setShowNotificationSettings(false)}
+                    className="text-gray-400 hover:text-primary transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  <button
+                    onClick={toggleNotifications}
+                    className={`w-full flex items-center justify-between p-2 rounded-md text-sm ${
+                      notificationsEnabled
+                        ? 'bg-primary/20 text-primary'
+                        : 'text-gray-400 hover:bg-primary/20'
+                    } transition-colors`}
+                  >
+                    <span>Goal Reminders</span>
+                    {notificationsEnabled ? (
+                      <Bell className="w-4 h-4" />
+                    ) : (
+                      <BellOff className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="relative">
             <Button
+              ref={filterButtonRef}
               variant="outline"
               size="sm"
+              className="relative bg-black border-green-800 hover:bg-primary/20"
               onClick={() => setShowFilterMenu(!showFilterMenu)}
-              className="flex items-center gap-2"
             >
-              <Filter className="w-4 h-4" />
-              <span>Filter</span>
-              <ChevronDown className="w-4 h-4" />
+              <Filter className="w-4 h-4 text-primary" />
             </Button>
 
             {showFilterMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-card rounded-lg shadow-lg border border-border z-50">
+              <div
+                ref={filterMenuRef}
+                className="absolute right-0 top-full mt-2 w-56 bg-black border border-green-800 rounded-xl shadow-lg z-50"
+              >
                 <div className="p-2">
-                  <h3 className="text-sm font-medium mb-2">Category</h3>
+                  <h3 className="text-sm font-medium mb-2 text-white">Categories</h3>
                   {categories.map(({ name, icon }) => (
                     <button
                       key={name}
@@ -291,17 +380,18 @@ export default function GoalsPage() {
                       }}
                       className={`w-full flex items-center gap-2 px-3 py-1.5 rounded-md text-sm ${
                         selectedCategory === name
-                          ? 'bg-primary text-primary-foreground'
-                          : 'text-muted-foreground hover:bg-accent'
+                          ? 'bg-primary text-black'
+                          : 'text-gray-400 hover:bg-primary/20'
                       }`}
                     >
                       {icon}
-                      <span>{name}</span>
+                      {name}
                     </button>
                   ))}
                 </div>
-                <div className="border-t border-border p-2">
-                  <h3 className="text-sm font-medium mb-2">Status</h3>
+
+                <div className="border-t border-green-800 p-2">
+                  <h3 className="text-sm font-medium mb-2 text-white">Status</h3>
                   {['All', 'Not Started', 'In Progress', 'Completed'].map((status) => (
                     <button
                       key={status}
@@ -311,8 +401,8 @@ export default function GoalsPage() {
                       }}
                       className={`w-full flex items-center gap-2 px-3 py-1.5 rounded-md text-sm ${
                         selectedStatus === status
-                          ? 'bg-primary text-primary-foreground'
-                          : 'text-muted-foreground hover:bg-accent'
+                          ? 'bg-primary text-black'
+                          : 'text-gray-400 hover:bg-primary/20'
                       }`}
                     >
                       {status}
@@ -326,7 +416,7 @@ export default function GoalsPage() {
           <Button
             onClick={() => setShowCreateModal(true)}
             size="sm"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-black"
           >
             <Plus className="w-4 h-4" />
             Add Goal
@@ -340,8 +430,8 @@ export default function GoalsPage() {
           onClick={() => setSelectedCategory('All')}
           className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition-colors ${
             selectedCategory === 'All'
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+              ? 'bg-primary text-black'
+              : 'bg-primary/20 text-white hover:bg-primary hover:text-black'
           }`}
         >
           All
@@ -352,8 +442,8 @@ export default function GoalsPage() {
             onClick={() => setSelectedCategory(name)}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition-colors ${
               selectedCategory === name
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                ? 'bg-primary text-black'
+                : 'bg-primary/20 text-white hover:bg-primary hover:text-black'
             }`}
           >
             {icon}
@@ -369,17 +459,17 @@ export default function GoalsPage() {
             key={goal.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="group relative bg-card rounded-xl p-4 shadow-sm border border-border hover:shadow-md transition-shadow"
+            className="group relative bg-black rounded-xl p-4 shadow-sm border border-green-800 hover:shadow-md transition-shadow"
           >
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-3">
                 <div className={`p-2 rounded-lg ${
-                  goal.category === 'Wellness' ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' :
-                  goal.category === 'Learning' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400' :
-                  goal.category === 'Finance' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' :
-                  goal.category === 'Career' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' :
-                  goal.category === 'Fitness' ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' :
-                  'bg-gray-100 dark:bg-gray-900/30 text-gray-600 dark:text-gray-400'
+                  goal.category === 'Wellness' ? 'bg-primary/20 text-primary' :
+                  goal.category === 'Learning' ? 'bg-primary/20 text-primary' :
+                  goal.category === 'Finance' ? 'bg-primary/20 text-primary' :
+                  goal.category === 'Career' ? 'bg-primary/20 text-primary' :
+                  goal.category === 'Fitness' ? 'bg-primary/20 text-primary' :
+                  'bg-primary/20 text-primary'
                 }`}>
                   {categories.find(c => c.name === goal.category)?.icon}
                 </div>
@@ -389,28 +479,32 @@ export default function GoalsPage() {
                 </div>
               </div>
 
-              <Button
-                variant="ghost"
-                size="icon"
-                className="opacity-0 group-hover:opacity-100 transition-opacity"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowActionMenu(showActionMenu === goal.id ? null : goal.id);
-                }}
-              >
-                <MoreVertical className="w-4 h-4" />
-              </Button>
+              <div className="relative">
+                <Button
+                  ref={actionButtonRef}
+                  variant="ghost"
+                  size="sm"
+                  className="opacity-0 group-hover:opacity-100 hover:bg-primary/20"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowActionMenu(goal.id === showActionMenu ? null : goal.id);
+                  }}
+                >
+                  <MoreVertical className="w-4 h-4 text-gray-400" />
+                </Button>
 
-              {showActionMenu === goal.id && (
-                <div className="absolute right-0 top-8 mt-2 w-48 bg-card rounded-lg shadow-lg border border-border z-50">
-                  <div className="py-1">
+                {showActionMenu === goal.id && (
+                  <div
+                    ref={actionMenuRef}
+                    className="absolute right-0 top-[calc(100%+0.25rem)] w-48 bg-black border border-green-800 rounded-xl shadow-lg z-50"
+                  >
                     <button
                       onClick={(e) => {
                         handleActionClick(e, goal);
                         setShowProgressModal(true);
                         setShowActionMenu(null);
                       }}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:bg-accent"
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-400 hover:bg-primary/20 hover:text-primary transition-colors"
                     >
                       <CheckCircle2 className="w-4 h-4" />
                       Update Progress
@@ -421,7 +515,7 @@ export default function GoalsPage() {
                         setShowEditModal(true);
                         setShowActionMenu(null);
                       }}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:bg-accent"
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-400 hover:bg-primary/20 hover:text-primary transition-colors"
                     >
                       <Edit2 className="w-4 h-4" />
                       Edit
@@ -432,7 +526,7 @@ export default function GoalsPage() {
                         setShowShareModal(true);
                         setShowActionMenu(null);
                       }}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:bg-accent"
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-400 hover:bg-primary/20 hover:text-primary transition-colors"
                     >
                       <Share2 className="w-4 h-4" />
                       Share
@@ -443,14 +537,14 @@ export default function GoalsPage() {
                         setShowDeleteModal(true);
                         setShowActionMenu(null);
                       }}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-destructive hover:bg-accent"
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
                       Delete
                     </button>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
             <div className="mt-4">
@@ -458,7 +552,7 @@ export default function GoalsPage() {
                 <span className="text-sm text-muted-foreground">Progress</span>
                 <span className="text-sm font-medium">{goal.progress}%</span>
               </div>
-              <div className="h-2 bg-muted rounded-full overflow-hidden">
+              <div className="h-2 bg-black rounded-full overflow-hidden border border-green-800">
                 <div
                   className="h-full bg-primary rounded-full transition-all duration-500"
                   style={{ width: `${goal.progress}%` }}
@@ -468,9 +562,9 @@ export default function GoalsPage() {
 
             <div className="mt-4 flex items-center justify-between text-sm">
               <span className={`px-2 py-1 rounded-full text-xs ${
-                goal.status === 'Completed' ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' :
-                goal.status === 'In Progress' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' :
-                'bg-gray-100 dark:bg-gray-900/30 text-gray-600 dark:text-gray-400'
+                goal.status === 'Completed' ? 'bg-primary/20 text-primary' :
+                goal.status === 'In Progress' ? 'bg-primary/20 text-primary' :
+                'bg-gray-900/30 text-gray-400'
               }`}>
                 {goal.status}
               </span>

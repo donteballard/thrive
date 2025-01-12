@@ -198,8 +198,8 @@ export default function ActivityPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
-          <p className="text-gray-600 dark:text-gray-400">Loading activities...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
+          <p className="text-gray-400">Loading activities...</p>
         </div>
       </div>
     );
@@ -218,12 +218,12 @@ export default function ActivityPage() {
       {/* Header with Add Activity Button */}
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold dark:text-white">Today's Activity</h1>
-          <p className="text-gray-600 dark:text-gray-400">Track your daily progress</p>
+          <h1 className="text-2xl font-bold text-white">Today's Activity</h1>
+          <p className="text-gray-400">Track your daily progress</p>
         </div>
         <button
           onClick={handleAddActivity}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-black rounded-lg transition-colors"
         >
           <Plus className="w-5 h-5" />
           <span>Add Activity</span>
@@ -238,15 +238,15 @@ export default function ActivityPage() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 rounded-xl bg-white dark:bg-gray-800 shadow-sm"
+                className="p-4 rounded-xl bg-black shadow-sm border border-green-800"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                    <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Tasks Completed</p>
-                    <p className="text-xl font-bold dark:text-white">{stats.tasksCompleted}</p>
+                    <p className="text-sm text-gray-400">Tasks Completed</p>
+                    <p className="text-xl font-bold text-white">{stats.tasksCompleted}</p>
                   </div>
                 </div>
               </motion.div>
@@ -255,15 +255,15 @@ export default function ActivityPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="p-4 rounded-xl bg-white dark:bg-gray-800 shadow-sm"
+                className="p-4 rounded-xl bg-black shadow-sm border border-green-800"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                    <Zap className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <Zap className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Points Earned</p>
-                    <p className="text-xl font-bold dark:text-white">{stats.pointsEarned}</p>
+                    <p className="text-sm text-gray-400">Points Earned</p>
+                    <p className="text-xl font-bold text-white">{stats.pointsEarned}</p>
                   </div>
                 </div>
               </motion.div>
@@ -272,15 +272,15 @@ export default function ActivityPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="p-4 rounded-xl bg-white dark:bg-gray-800 shadow-sm"
+                className="p-4 rounded-xl bg-black shadow-sm border border-green-800"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                    <Calendar className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <Calendar className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Current Streak</p>
-                    <p className="text-xl font-bold dark:text-white">{stats.currentStreak} days</p>
+                    <p className="text-sm text-gray-400">Current Streak</p>
+                    <p className="text-xl font-bold text-white">{stats.currentStreak} days</p>
                   </div>
                 </div>
               </motion.div>
@@ -289,15 +289,15 @@ export default function ActivityPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="p-4 rounded-xl bg-white dark:bg-gray-800 shadow-sm"
+                className="p-4 rounded-xl bg-black shadow-sm border border-green-800"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
-                    <Clock className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <Clock className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Active Minutes</p>
-                    <p className="text-xl font-bold dark:text-white">{stats.activeMinutes}</p>
+                    <p className="text-sm text-gray-400">Active Minutes</p>
+                    <p className="text-xl font-bold text-white">{stats.activeMinutes}</p>
                   </div>
                 </div>
               </motion.div>
@@ -311,26 +311,32 @@ export default function ActivityPage() {
         {/* Date Filter */}
         <div className="flex items-center gap-4">
           <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+            <label className="block text-sm text-gray-400 mb-1">
               Start Date
             </label>
-            <input
-              type="date"
-              value={dateFilter.startDate}
-              onChange={(e) => setDateFilter({ ...dateFilter, startDate: e.target.value })}
-              className="px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            />
+            <div className="relative">
+              <input
+                type="date"
+                value={dateFilter.startDate}
+                onChange={(e) => setDateFilter({ ...dateFilter, startDate: e.target.value })}
+                className="w-full px-4 py-2 border border-green-800 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+            </div>
           </div>
           <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+            <label className="block text-sm text-gray-400 mb-1">
               End Date
             </label>
-            <input
-              type="date"
-              value={dateFilter.endDate}
-              onChange={(e) => setDateFilter({ ...dateFilter, endDate: e.target.value })}
-              className="px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            />
+            <div className="relative">
+              <input
+                type="date"
+                value={dateFilter.endDate}
+                onChange={(e) => setDateFilter({ ...dateFilter, endDate: e.target.value })}
+                className="w-full px-4 py-2 border border-green-800 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+            </div>
           </div>
         </div>
 
@@ -343,7 +349,7 @@ export default function ActivityPage() {
               className={`px-4 py-2 font-medium border-b-2 transition-colors ${
                 selectedCategory === category
                   ? 'border-primary text-primary'
-                  : 'border-transparent text-muted-foreground hover:text-primary'
+                  : 'border-transparent text-gray-400 hover:text-white hover:border-green-800'
               }`}
             >
               {category}
@@ -359,45 +365,45 @@ export default function ActivityPage() {
             key={activity.id}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="p-4 rounded-xl bg-white dark:bg-gray-800 shadow-sm cursor-pointer hover:shadow-md transition-all"
+            className="p-4 rounded-xl bg-black shadow-sm border border-green-800 cursor-pointer hover:bg-primary/5 transition-all"
             onClick={() => handleActivityClick(activity)}
           >
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-3">
                 <div className={`p-2 rounded-lg ${
-                  activity.type === 'task' ? 'bg-blue-100 dark:bg-blue-900/30' :
-                  activity.type === 'goal_progress' ? 'bg-green-100 dark:bg-green-900/30' :
-                  'bg-purple-100 dark:bg-purple-900/30'
+                  activity.type === 'task' ? 'bg-primary/20' :
+                  activity.type === 'goal_progress' ? 'bg-primary/30' :
+                  'bg-primary/40'
                 }`}>
                   {activity.type === 'task' ? (
-                    <CheckCircle2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
                   ) : activity.type === 'goal_progress' ? (
-                    <BarChart2 className="w-5 h-5 text-green-600 dark:text-green-400" />
+                    <BarChart2 className="w-5 h-5 text-primary" />
                   ) : (
-                    <Zap className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    <Zap className="w-5 h-5 text-primary" />
                   )}
                 </div>
                 <div>
-                  <h3 className="font-medium dark:text-white">{activity.title}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{activity.description}</p>
+                  <h3 className="font-medium text-white">{activity.title}</h3>
+                  <p className="text-sm text-gray-400">{activity.description}</p>
                   <div className="flex items-center gap-2 mt-2">
-                    <span className="text-xs text-gray-500 dark:text-gray-500">
+                    <span className="text-xs text-gray-500">
                       {formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true })}
                     </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-500">•</span>
-                    <span className="text-xs font-medium text-blue-600 dark:text-blue-400">+{activity.points} points</span>
+                    <span className="text-xs text-gray-500">•</span>
+                    <span className="text-xs font-medium text-primary">+{activity.points} points</span>
                   </div>
                 </div>
               </div>
               {activity.type === 'goal_progress' && activity.progress !== undefined && (
                 <div className="w-24">
-                  <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div className="h-2 bg-black rounded-full overflow-hidden border border-green-800">
                     <div
-                      className="h-full bg-green-600 dark:bg-green-500 rounded-full"
+                      className="h-full bg-primary rounded-full"
                       style={{ width: `${activity.progress}%` }}
                     />
                   </div>
-                  <p className="text-xs text-center mt-1 text-gray-600 dark:text-gray-400">
+                  <p className="text-xs text-center mt-1 text-gray-400">
                     {activity.progress}%
                   </p>
                 </div>
@@ -413,17 +419,17 @@ export default function ActivityPage() {
           <button
             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50"
+            className="p-2 rounded-lg hover:bg-primary/20 disabled:opacity-50 text-white"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <span className="text-sm text-gray-600 dark:text-gray-400">
+          <span className="text-sm text-gray-400">
             Page {currentPage} of {totalPages}
           </span>
           <button
             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50"
+            className="p-2 rounded-lg hover:bg-primary/20 disabled:opacity-50 text-white"
           >
             <ChevronRight className="w-5 h-5" />
           </button>

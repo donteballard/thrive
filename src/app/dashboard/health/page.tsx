@@ -39,28 +39,28 @@ export default function HealthPage() {
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold dark:text-white">Health Tracking</h1>
-        <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-          <Settings className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+        <h1 className="text-2xl font-bold text-white">Health Tracking</h1>
+        <button className="p-2 hover:bg-primary/20 rounded-lg transition-colors">
+          <Settings className="w-5 h-5 text-gray-400 hover:text-primary" />
         </button>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="border-b dark:border-gray-700">
+      <div className="border-b border-green-800">
         <nav className="flex gap-4">
           <button
             onClick={() => setActiveTab('overview')}
             className={`pb-4 px-2 text-sm font-medium transition-colors relative ${
               activeTab === 'overview'
-                ? 'text-blue-600 dark:text-blue-400'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                ? 'text-primary'
+                : 'text-gray-400 hover:text-white'
             }`}
           >
             Overview
             {activeTab === 'overview' && (
               <motion.div
                 layoutId="activeTab"
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
               />
             )}
           </button>
@@ -68,15 +68,15 @@ export default function HealthPage() {
             onClick={() => setActiveTab('devices')}
             className={`pb-4 px-2 text-sm font-medium transition-colors relative ${
               activeTab === 'devices'
-                ? 'text-blue-600 dark:text-blue-400'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                ? 'text-primary'
+                : 'text-gray-400 hover:text-white'
             }`}
           >
             Connected Devices
             {activeTab === 'devices' && (
               <motion.div
                 layoutId="activeTab"
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
               />
             )}
           </button>
@@ -84,15 +84,15 @@ export default function HealthPage() {
             onClick={() => setActiveTab('history')}
             className={`pb-4 px-2 text-sm font-medium transition-colors relative ${
               activeTab === 'history'
-                ? 'text-blue-600 dark:text-blue-400'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                ? 'text-primary'
+                : 'text-gray-400 hover:text-white'
             }`}
           >
             History
             {activeTab === 'history' && (
               <motion.div
                 layoutId="activeTab"
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
               />
             )}
           </button>
@@ -108,23 +108,23 @@ export default function HealthPage() {
 
             {/* Health Insights */}
             <div className="mt-8">
-              <h2 className="text-xl font-semibold mb-4 dark:text-white">Health Insights</h2>
+              <h2 className="text-xl font-semibold mb-4 text-white">Health Insights</h2>
               <div className="grid gap-4">
                 {healthInsights.map((insight) => (
                   <motion.div
                     key={insight.id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`p-4 rounded-xl ${
+                    className={`p-4 rounded-xl bg-black border ${
                       insight.type === 'positive'
-                        ? 'bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-900/50'
+                        ? 'border-green-800 bg-primary/10'
                         : insight.type === 'warning'
-                        ? 'bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-900/50'
-                        : 'bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-900/50'
+                        ? 'border-yellow-800 bg-yellow-900/10'
+                        : 'border-green-800 bg-primary/5'
                     }`}
                   >
-                    <h3 className="font-semibold mb-1 dark:text-white">{insight.title}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">{insight.description}</p>
+                    <h3 className="font-semibold mb-1 text-white">{insight.title}</h3>
+                    <p className="text-sm text-gray-400">{insight.description}</p>
                   </motion.div>
                 ))}
               </div>
@@ -134,12 +134,12 @@ export default function HealthPage() {
 
         {activeTab === 'devices' && (
           <div className="grid gap-4">
-            <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
-              <h3 className="font-semibold mb-2 dark:text-white">Connected Devices</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="p-4 bg-black border border-green-800 rounded-xl">
+              <h3 className="font-semibold mb-2 text-white">Connected Devices</h3>
+              <p className="text-sm text-gray-400">
                 No devices connected yet. Click below to add a device.
               </p>
-              <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <button className="mt-4 px-4 py-2 bg-primary hover:bg-primary/90 text-black rounded-lg transition-colors">
                 Connect Device
               </button>
             </div>
@@ -148,9 +148,9 @@ export default function HealthPage() {
 
         {activeTab === 'history' && (
           <div className="grid gap-4">
-            <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
-              <h3 className="font-semibold mb-2 dark:text-white">Activity History</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="p-4 bg-black border border-green-800 rounded-xl">
+              <h3 className="font-semibold mb-2 text-white">Activity History</h3>
+              <p className="text-sm text-gray-400">
                 Your activity history will appear here once you start tracking.
               </p>
             </div>

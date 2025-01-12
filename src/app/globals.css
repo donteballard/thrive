@@ -218,4 +218,147 @@ section .wallet-adapter-button {
 .wallet-adapter-modal-subtitle-text,
 .wallet-adapter-modal-subtitle span {
   @apply text-white !important;
-} 
+}
+
+/* Date Input Calendar Styles */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  color: white;
+}
+
+input[type="date"]::-webkit-datetime-edit {
+  color: white;
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  color: white;
+}
+
+::-webkit-calendar-picker {
+  background-color: black;
+  color: white;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 0.8;
+  filter: invert(1) brightness(100%) sepia(100%) saturate(1000%) hue-rotate(80deg);
+}
+
+/* For Firefox */
+input[type="date"] {
+  color-scheme: dark;
+}
+
+/* Progress Slider Thumb */
+input[type="range"]::-webkit-slider-thumb {
+  @apply w-4 h-4 rounded-full bg-primary border-2 border-black cursor-pointer appearance-none !important;
+}
+
+input[type="range"]::-moz-range-thumb {
+  @apply w-4 h-4 rounded-full bg-primary border-2 border-black cursor-pointer !important;
+}
+
+/* Select Options Background */
+select option {
+  @apply bg-black text-white !important;
+}
+
+select option:hover {
+  @apply bg-primary/20 text-white !important;
+  background-color: rgb(34 197 94 / 0.2) !important;
+}
+select option:focus {
+  @apply bg-primary/20 text-white !important;
+  background-color: rgb(34 197 94 / 0.2) !important;
+}
+select option:active {
+  @apply bg-primary/20 text-white !important;
+  background-color: rgb(34 197 94 / 0.2) !important;
+}
+select option:checked {
+  @apply bg-primary/20 text-white !important;
+  background-color: rgb(34 197 94 / 0.2) !important;
+}
+
+/* Checkbox Custom Styles */
+input[type="checkbox"] {
+  @apply text-primary border-green-800 focus:ring-primary focus:ring-offset-0 focus:ring-offset-black !important;
+  accent-color: rgb(34 197 94) !important;
+}
+
+input[type="checkbox"]:checked {
+  background-color: rgb(34 197 94) !important;
+  border-color: rgb(34 197 94) !important;
+}
+
+input[type="checkbox"]:focus {
+  --tw-ring-color: rgb(34 197 94) !important;
+  --tw-ring-offset-color: black !important;
+}
+
+/* Select Element Styles */
+select,
+select:focus,
+select:hover,
+select:active {
+  @apply border-green-800 ring-primary ring-offset-black !important;
+  --tw-ring-color: rgb(34 197 94) !important;
+  --tw-ring-opacity: 0.5 !important;
+}
+
+select:focus-visible {
+  outline: 2px solid rgb(34 197 94) !important;
+  outline-offset: 2px !important;
+}
+
+/* Select Options Styles */
+select option {
+  @apply bg-black text-white !important;
+}
+
+select option:hover {
+  @apply bg-primary/20 text-white !important;
+  background-color: rgb(34 197 94 / 0.2) !important;
+}
+select option:focus {
+  @apply bg-primary/20 text-white !important;
+  background-color: rgb(34 197 94 / 0.2) !important;
+}
+select option:active {
+  @apply bg-primary/20 text-white !important;
+  background-color: rgb(34 197 94 / 0.2) !important;
+}
+select option:checked {
+  background: rgb(34 197 94 / 0.2) !important;
+  color: white !important;
+}
+
+/* Firefox specific styles */
+@-moz-document url-prefix() {
+  select {
+    @apply bg-black text-white border-green-800 !important;
+  }
+  
+  select:hover,
+  select:focus {
+    @apply border-primary !important;
+  }
+  
+  select option {
+    @apply bg-black text-white !important;
+  }
+  
+  select option:hover,
+  select option:focus,
+  select option:active,
+  select option:checked {
+    background-color: rgb(34 197 94 / 0.2) !important;
+    color: white !important;
+  }
+}
+ 

@@ -142,7 +142,7 @@ export default function AchievementsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -182,15 +182,15 @@ export default function AchievementsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="p-6 bg-background rounded-xl shadow-sm border border-border"
+            className="p-6 bg-black rounded-xl shadow-sm border border-green-800"
           >
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-blue-500/10 dark:bg-blue-500/20 rounded-lg">
-                <Trophy className="w-6 h-6 text-blue-500" />
+              <div className="p-3 bg-primary/20 rounded-lg">
+                <Trophy className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Achievements Earned</p>
-                <h3 className="text-2xl font-bold">
+                <p className="text-sm text-gray-400">Achievements Earned</p>
+                <h3 className="text-2xl font-bold text-white">
                   {stats.totalEarned}/{stats.totalAchievements}
                 </h3>
               </div>
@@ -201,15 +201,15 @@ export default function AchievementsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="p-6 bg-background rounded-xl shadow-sm border border-border"
+            className="p-6 bg-black rounded-xl shadow-sm border border-green-800"
           >
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-blue-500/10 dark:bg-blue-500/20 rounded-lg">
-                <Medal className="w-6 h-6 text-blue-500" />
+              <div className="p-3 bg-primary/20 rounded-lg">
+                <Medal className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Completion Rate</p>
-                <h3 className="text-2xl font-bold">
+                <p className="text-sm text-gray-400">Completion Rate</p>
+                <h3 className="text-2xl font-bold text-white">
                   {Math.round((stats.totalEarned / stats.totalAchievements) * 100)}%
                 </h3>
               </div>
@@ -220,15 +220,15 @@ export default function AchievementsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="p-6 bg-background rounded-xl shadow-sm border border-border"
+            className="p-6 bg-black rounded-xl shadow-sm border border-green-800"
           >
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-blue-500/10 dark:bg-blue-500/20 rounded-lg">
-                <Award className="w-6 h-6 text-blue-500" />
+              <div className="p-3 bg-primary/20 rounded-lg">
+                <Award className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Tokens Earned</p>
-                <h3 className="text-2xl font-bold">{stats.totalTokens}</h3>
+                <p className="text-sm text-gray-400">Tokens Earned</p>
+                <h3 className="text-2xl font-bold text-white">{stats.totalTokens}</h3>
               </div>
             </div>
           </motion.div>
@@ -236,7 +236,7 @@ export default function AchievementsPage() {
       )}
 
       {/* Main Navigation */}
-      <div className="border-b border-border">
+      <div className="border-b border-green-800">
         <nav className="flex gap-4">
           {categories.map((category) => (
             <button
@@ -245,7 +245,7 @@ export default function AchievementsPage() {
               className={`px-4 py-2 font-medium border-b-2 transition-colors ${
                 filters.category === category
                   ? 'border-primary text-primary'
-                  : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+                  : 'border-transparent text-gray-400 hover:text-white hover:border-green-800'
               }`}
             >
               {category}
@@ -256,13 +256,13 @@ export default function AchievementsPage() {
 
       {/* Status Filter */}
       <div className="flex items-center gap-2">
-        <div className="flex items-center gap-2 bg-background rounded-lg border border-border p-1">
+        <div className="flex items-center gap-2 bg-black rounded-lg border border-green-800 p-1">
           <button
             onClick={() => updateFilters({ showEarned: true, showUnearned: false })}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
               filters.showEarned && !filters.showUnearned
-                ? 'bg-primary text-primary-foreground'
-                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                ? 'bg-primary text-black'
+                : 'text-gray-400 hover:bg-primary/20 hover:text-white'
             }`}
           >
             <CheckCircle2 className="w-4 h-4" />
@@ -272,8 +272,8 @@ export default function AchievementsPage() {
             onClick={() => updateFilters({ showEarned: false, showUnearned: true })}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
               !filters.showEarned && filters.showUnearned
-                ? 'bg-primary text-primary-foreground'
-                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                ? 'bg-primary text-black'
+                : 'text-gray-400 hover:bg-primary/20 hover:text-white'
             }`}
           >
             <Clock className="w-4 h-4" />
@@ -283,8 +283,8 @@ export default function AchievementsPage() {
             onClick={() => updateFilters({ showEarned: true, showUnearned: true })}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
               filters.showEarned && filters.showUnearned
-                ? 'bg-primary text-primary-foreground'
-                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                ? 'bg-primary text-black'
+                : 'text-gray-400 hover:bg-primary/20 hover:text-white'
             }`}
           >
             <span className="text-sm">All</span>
@@ -299,44 +299,44 @@ export default function AchievementsPage() {
             key={achievement.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`group relative bg-background rounded-xl p-6 shadow-sm border border-border hover:shadow-md transition-shadow ${
+            className={`group relative bg-black rounded-xl p-6 shadow-sm border border-green-800 hover:shadow-md transition-shadow ${
               achievement.earned ? 'bg-primary/5' : ''
             }`}
             onClick={() => handleAchievementClick(achievement)}
           >
             <div className="flex items-start gap-4">
               <div className={`p-3 rounded-xl ${
-                achievement.rarity === 'Common' ? 'bg-blue-500/10 dark:bg-blue-500/20' :
-                achievement.rarity === 'Rare' ? 'bg-blue-500/10 dark:bg-blue-500/20' :
-                'bg-blue-500/10 dark:bg-blue-500/20'
+                achievement.rarity === 'Common' ? 'bg-primary/20' :
+                achievement.rarity === 'Rare' ? 'bg-primary/30' :
+                'bg-primary/40'
               }`}>
                 <achievement.icon className={`w-6 h-6 ${
-                  achievement.rarity === 'Common' ? 'text-blue-500' :
-                  achievement.rarity === 'Rare' ? 'text-blue-500' :
-                  'text-blue-500'
+                  achievement.rarity === 'Common' ? 'text-primary' :
+                  achievement.rarity === 'Rare' ? 'text-primary' :
+                  'text-primary'
                 }`} />
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold">{achievement.title}</h3>
+                  <h3 className="font-semibold text-white">{achievement.title}</h3>
                   <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-                    achievement.rarity === 'Common' ? 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-500' :
-                    achievement.rarity === 'Rare' ? 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-500' :
-                    'bg-blue-500/10 dark:bg-blue-500/20 text-blue-500'
+                    achievement.rarity === 'Common' ? 'bg-primary/20 text-primary' :
+                    achievement.rarity === 'Rare' ? 'bg-primary/30 text-primary' :
+                    'bg-primary/40 text-primary'
                   }`}>
                     {achievement.rarity}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground mt-1">{achievement.description}</p>
+                <p className="text-sm text-gray-400 mt-1">{achievement.description}</p>
                 
                 <div className="mt-4">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm text-muted-foreground">Progress</span>
-                    <span className="text-sm font-medium">{achievement.progress}%</span>
+                    <span className="text-sm text-gray-400">Progress</span>
+                    <span className="text-sm font-medium text-white">{achievement.progress}%</span>
                   </div>
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-2 bg-black rounded-full overflow-hidden border border-green-800">
                     <div
-                      className="h-full bg-blue-500 rounded-full transition-all duration-500"
+                      className="h-full bg-primary rounded-full transition-all duration-500"
                       style={{ width: `${achievement.progress}%` }}
                     />
                   </div>
@@ -344,13 +344,13 @@ export default function AchievementsPage() {
 
                 <div className="mt-4 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Trophy className="w-4 h-4 text-blue-500" />
-                    <span className="text-sm font-medium text-blue-500">
+                    <Trophy className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium text-primary">
                       +{achievement.tokenReward} THRAIVE
                     </span>
                   </div>
                   {achievement.earned && (
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-gray-400">
                       Earned {new Date(achievement.earnedDate!).toLocaleDateString()}
                     </span>
                   )}
@@ -363,22 +363,22 @@ export default function AchievementsPage() {
 
       {/* Leaderboard */}
       <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">Leaderboard</h2>
-        <div className="bg-background rounded-xl shadow-sm border border-border overflow-hidden">
+        <h2 className="text-xl font-semibold text-white mb-4">Leaderboard</h2>
+        <div className="bg-black rounded-xl shadow-sm border border-green-800 overflow-hidden">
           <div className="p-4 space-y-4">
             {leaderboard.map((user, index) => (
               <div
                 key={user.id}
-                className="flex items-center justify-between p-3 rounded-lg hover:bg-accent/50 transition-colors"
+                className="flex items-center justify-between p-3 rounded-lg hover:bg-primary/20 transition-colors"
               >
                 <div className="flex items-center gap-4">
                   <span className="text-2xl">{user.avatar}</span>
                   <div>
-                    <p className="font-medium">{user.address.slice(0, 4)}...{user.address.slice(-4)}</p>
-                    <p className="text-sm text-muted-foreground">{user.achievements} achievements</p>
+                    <p className="font-medium text-white">{user.address.slice(0, 4)}...{user.address.slice(-4)}</p>
+                    <p className="text-sm text-gray-400">{user.achievements} achievements</p>
                   </div>
                 </div>
-                <p className="font-semibold text-blue-500">{user.points} pts</p>
+                <p className="font-semibold text-primary">{user.points} pts</p>
               </div>
             ))}
           </div>
@@ -387,24 +387,24 @@ export default function AchievementsPage() {
 
       {/* Timeline */}
       <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
+        <h2 className="text-xl font-semibold text-white mb-4">Recent Activity</h2>
         <div className="space-y-4">
           {timeline.map((event) => (
             <div
               key={event.id}
-              className="flex items-center gap-4 p-4 bg-background rounded-xl shadow-sm border border-border hover:bg-accent/50 transition-colors"
+              className="flex items-center gap-4 p-4 bg-black rounded-xl shadow-sm border border-green-800 hover:bg-primary/20 transition-colors"
             >
-              <div className="p-2 rounded-lg bg-blue-500/10 dark:bg-blue-500/20">
-                <event.icon className="w-5 h-5 text-blue-500" />
+              <div className="p-2 rounded-lg bg-primary/20">
+                <event.icon className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-medium">{event.achievement}</h3>
-                  <span className="text-sm text-muted-foreground">
+                  <h3 className="font-medium text-white">{event.achievement}</h3>
+                  <span className="text-sm text-gray-400">
                     {new Date(event.date).toLocaleDateString()}
                   </span>
                 </div>
-                <p className="text-sm text-blue-500 mt-1">+{event.reward} THRAIVE</p>
+                <p className="text-sm text-primary mt-1">+{event.reward} THRAIVE</p>
               </div>
             </div>
           ))}

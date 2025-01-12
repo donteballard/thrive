@@ -107,7 +107,7 @@ export default function SettingsPage() {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 dark:text-white">Settings</h1>
+      <h1 className="text-2xl font-bold mb-6 text-white">Settings</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Settings Navigation */}
@@ -125,11 +125,11 @@ export default function SettingsPage() {
                   onClick={() => setActiveSection(section.id)}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                     activeSection === section.id
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                      ? 'bg-primary text-black'
+                      : 'text-gray-400 hover:bg-primary/20 border border-green-800'
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className={`w-5 h-5 ${activeSection === section.id ? 'text-black' : 'text-primary'}`} />
                   <span className="font-medium">{section.title}</span>
                 </button>
               );
@@ -148,16 +148,16 @@ export default function SettingsPage() {
               key={section.id}
               className={`space-y-4 ${activeSection === section.id ? 'block' : 'hidden'}`}
             >
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+              <div className="bg-black rounded-xl shadow-sm border border-green-800">
                 <div className="p-6">
-                  <h2 className="text-xl font-semibold mb-4 dark:text-white">{section.title}</h2>
+                  <h2 className="text-xl font-semibold mb-4 text-white">{section.title}</h2>
                   <div className="space-y-6">
                     {section.settings.map((setting) => (
                       <div key={setting.name} className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-medium dark:text-white">{setting.name}</h3>
+                          <h3 className="font-medium text-white">{setting.name}</h3>
                           {setting.type === 'toggle' && (
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                            <p className="text-sm text-gray-400">
                               {setting.value ? 'Enabled' : 'Disabled'}
                             </p>
                           )}
@@ -166,11 +166,11 @@ export default function SettingsPage() {
                           <button
                             onClick={() => handleSettingChange(section.id, setting.name, !setting.value)}
                             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                              setting.value ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
+                              setting.value ? 'bg-primary' : 'bg-gray-700'
                             }`}
                           >
                             <span
-                              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                              className={`inline-block h-4 w-4 transform rounded-full bg-black transition-transform ${
                                 setting.value ? 'translate-x-6' : 'translate-x-1'
                               }`}
                             />
@@ -179,7 +179,7 @@ export default function SettingsPage() {
                           <select
                             value={setting.value as string}
                             onChange={(e) => handleSettingChange(section.id, setting.name, e.target.value)}
-                            className="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white"
+                            className="px-3 py-2 bg-black border border-green-800 rounded-lg text-white focus:ring-primary focus:border-primary"
                           >
                             {setting.options?.map((option) => (
                               <option key={option} value={option}>
@@ -193,7 +193,7 @@ export default function SettingsPage() {
                             value={setting.value as string}
                             readOnly={setting.readonly}
                             onChange={(e) => handleSettingChange(section.id, setting.name, e.target.value)}
-                            className={`px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white ${
+                            className={`px-3 py-2 bg-black border border-green-800 rounded-lg text-white focus:ring-primary focus:border-primary ${
                               setting.readonly ? 'cursor-not-allowed opacity-60' : ''
                             }`}
                           />
@@ -205,8 +205,8 @@ export default function SettingsPage() {
               </div>
 
               {section.id === 'profile' && (
-                <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
-                  <p className="text-sm text-blue-600 dark:text-blue-400">
+                <div className="mt-4 p-4 bg-primary/20 rounded-lg border border-green-800">
+                  <p className="text-sm text-primary">
                     Your profile information is used to personalize your experience and improve our services.
                   </p>
                 </div>
